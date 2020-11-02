@@ -47,6 +47,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdditionalModules\ErrorHandler.cs" />
+    <Compile Include="createColumnDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="createColumnDlg.Designer.cs">
+      <DependentUpon>createColumnDlg.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -55,6 +61,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="createColumnDlg.resx">
+      <DependentUpon>createColumnDlg.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

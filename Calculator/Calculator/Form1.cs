@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Calculator.AdditionalModules;
+using System;
 using System.Windows.Forms;
-using Calculator.AdditionalModules;
 
 namespace Calculator
 {
@@ -16,6 +9,8 @@ namespace Calculator
         public Calculator()
         {
             InitializeComponent();
+
+            dataGridView1.MultiSelect = false;
         }
 
         /// <summary>
@@ -28,14 +23,33 @@ namespace Calculator
         {
             try
             {
-                DataView data = new DataView();
+                bool answer = true;
 
+                if (dataGridView1.Rows.Count > 0 || dataGridView1.Columns.Count > 0)
+                    answer = ErrorHandler.processingQuestion("Прежде чем создавать новую таблицу, убедитесь, что сохранили текущую. В противном случае она будет утеряна. Вы хотите продолжить?");
 
+                switch (answer)
+                {
+                    case true:
+                        // Полная зачистка
+                        dataGridView1.Rows.Clear();
+                        dataGridView1.Columns.Clear();
+
+                        // Создаём новые колонки
+                        dataGridView1.Columns.Add("number", "#"); // Столбец для порядкового номера
+                        dataGridView1.Columns.Add("hammdists", "E(h)"); // Математическое ожидание расстояний Хэмминга
+                        // Дальнейшие столбцы в этой таблице - стандартное отклонение расстояний Хэмминга,
+                        // Их пользователь вводит уже сам
+                        break;
+
+                    case false:
+                        break;
+                }
             }
 
             catch (Exception ex)
             {
-                ErrorHandler.showMessage(ex.Message);
+                ErrorHandler.showErrorMessage(ex.Message);
             }
         }
 
@@ -48,7 +62,15 @@ namespace Calculator
         /// <param name="e"></param>
         private void открытьToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // ...
+            try
+            {
+                // ...
+            }
+
+            catch (Exception ex)
+            {
+                ErrorHandler.showErrorMessage(ex.Message);
+            }
         }
 
         /// <summary>
@@ -58,7 +80,93 @@ namespace Calculator
         /// <param name="e"></param>
         private void сохранитьтСформированнуюТаблицуToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // ...
+            try
+            {
+                // ...
+            }
+
+            catch (Exception ex)
+            {
+                ErrorHandler.showErrorMessage(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Добавление в таблицу нового столбца.
+        /// Используется для записи значений стандартного
+        /// отклонения расстояний Хэмминга
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void addColumn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (var crDlg = new createColumnDlg())
+                {
+                    var result = crDlg.ShowDialog();
+
+                    if (result == DialogResult.OK)
+                        dataGridView1.Columns.Add(string.Format("stdev{0}", dataGridView1.Columns.Count - 2), crDlg.returnValue);
+                }
+            }
+
+            catch (Exception ex)
+            {
+                ErrorHandler.showErrorMessage(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Удаление выделенного столбца из таблицы
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void rmColumn_Click(object sender, EventArgs e) // FIXME
+        {
+            try
+            {
+                if (dataGridView1.SelectedColumns[0].Name == "number" || dataGridView1.SelectedColumns[0].Name == "hammdists")
+                    throw new Exception("Этот столбец удалять нельзя");
+
+                dataGridView1.Columns.Remove(dataGridView1.SelectedColumns[0]);
+            }
+
+            catch (Exception ex)
+            {
+                ErrorHandler.showErrorMessage(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Добавление строки в таблицу
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void addRow_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                dataGridView1.Rows.Add();
+            }
+
+            catch (Exception ex)
+            {
+                ErrorHandler.showErrorMessage(ex.Message);
+            }
+        }
+
+        private void rmRow_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                dataGridView1.Rows.Remove(dataGridView1.SelectedRows[0]);
+            }
+
+            catch (Exception ex)
+            {
+                ErrorHandler.showErrorMessage(ex.Message);
+            }
         }
     }
 }
