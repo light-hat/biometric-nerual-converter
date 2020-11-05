@@ -1,13 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Calculator.Calculate
+﻿namespace Calculator.Calculate
 {
+    /// <summary>
+    /// Немного модифицированный интерполяционный поиск.
+    /// Возвращает не конкретный элемент, а два соседних элемента,
+    /// между которыми находится значение
+    /// </summary>
     public static class InterpolSearch
     {
+        /// <summary>
+        /// Метод, непосредственно осуществляющий поиск.
+        /// </summary>
+        /// <param name="a">Входной массив, в котором осуществляется поиск</param>
+        /// <param name="key">Искомое значение, ключ</param>
+        /// <returns>Массив из 2-х элементов. Содержит индексы элементов, между которыми находится искомое значение.</returns>
         public static int[] execute(int[] a, int key)
         {
             int[] ans = new int[2];
