@@ -1,4 +1,5 @@
 ﻿using Calculator.AdditionalModules;
+using Calculator.Calculate;
 using System;
 using System.Windows.Forms;
 
@@ -161,6 +162,27 @@ namespace Calculator
             try
             {
                 dataGridView1.Rows.Remove(dataGridView1.SelectedRows[0]);
+            }
+
+            catch (Exception ex)
+            {
+                ErrorHandler.showErrorMessage(ex.Message);
+            }
+        }
+
+        private void вычислениеЗначенияToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (var calcDlg = new calculateDlg())
+                {
+                    var result = calcDlg.ShowDialog();
+
+                    if (result == DialogResult.OK)
+                    {
+                        // ...
+                    }
+                }
             }
 
             catch (Exception ex)
