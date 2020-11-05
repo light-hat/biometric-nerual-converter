@@ -2,8 +2,8 @@
 {
     /// <summary>
     /// Немного модифицированный интерполяционный поиск.
-    /// Возвращает не конкретный элемент, а два соседних элемента,
-    /// между которыми находится значение
+    /// Возвращает не конкретный элемент массива, а два соседних элемента,
+    /// между которыми находится значение.
     /// </summary>
     public static class InterpolSearch
     {
@@ -13,14 +13,14 @@
         /// <param name="a">Входной массив, в котором осуществляется поиск</param>
         /// <param name="key">Искомое значение, ключ</param>
         /// <returns>Массив из 2-х элементов. Содержит индексы элементов, между которыми находится искомое значение.</returns>
-        public static int[] execute(int[] a, int key)
+        public static int[] execute(double[] a, double key)
         {
             int[] ans = new int[2];
             int mid = 0, left = 0, right = a.Length - 1;
 
             while (a[left] <= key && a[right] >= key)
             {
-                mid = left + ((key - a[left]) * (right - left)) / (a[right] - a[left]);
+                mid = (int)(left + ((key - a[left]) * (right - left)) / (a[right] - a[left]));
 
                 if (a[mid] < key) left = mid + 1;
 
@@ -29,6 +29,7 @@
                 else
                 {
                     ans[0] = mid;
+
                     return ans;
                 }
             }
@@ -36,6 +37,7 @@
             if (a[left] == key)
             {
                 ans[0] = left;
+
                 return ans;
             }
 

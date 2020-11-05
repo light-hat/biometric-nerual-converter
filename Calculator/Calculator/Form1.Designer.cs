@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Calculator));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.базаДанныхToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,6 +41,7 @@
             this.rmRow = new System.Windows.Forms.Button();
             this.addColumn = new System.Windows.Forms.Button();
             this.rmColumn = new System.Windows.Forms.Button();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -147,6 +149,12 @@
             this.rmColumn.UseVisualStyleBackColor = true;
             this.rmColumn.Click += new System.EventHandler(this.rmColumn_Click);
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
             // Calculator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -181,6 +189,7 @@
         private System.Windows.Forms.Button rmRow;
         private System.Windows.Forms.Button addColumn;
         private System.Windows.Forms.Button rmColumn;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
     }
 }
 

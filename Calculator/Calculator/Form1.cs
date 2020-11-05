@@ -1,6 +1,7 @@
 ﻿using Calculator.AdditionalModules;
 using Calculator.Calculate;
 using System;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Calculator
@@ -157,6 +158,11 @@ namespace Calculator
             }
         }
 
+        /// <summary>
+        /// Удалить строку из таблицы
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void rmRow_Click(object sender, EventArgs e)
         {
             try
@@ -180,7 +186,19 @@ namespace Calculator
 
                     if (result == DialogResult.OK)
                     {
-                        // ...
+                        int[] iter_matrix_rows_indexes = InterpolSearch.execute(getDoubleValuesFromRowsOfTable(dataGridView1.Rows), calcDlg.hammingDist);
+                        int[] iter_matrix_cols_indexes = InterpolSearch.execute(getDoubleValuesFromColumnsOfTable(dataGridView1.Columns), calcDlg.standDeviation);
+
+                        double[,] iter_matrix = new double[2, 2];
+                        iter_matrix = getDoubleValuesFromTable(iter_matrix_rows_indexes, iter_matrix_cols_indexes);
+
+                        double[] iter_matrix_rows = getIterRows(iter_matrix_rows_indexes);
+                        double[] iter_matrix_cols = getIterCols(iter_matrix_cols_indexes);
+
+                        TableExtender tableExter = new TableExtender(iter_matrix, iter_matrix_rows_indexes, iter_matrix_cols_indexes);
+                        tableExter.extend();
+
+                        MessageBox.Show("Результат по первой итерации: " + Convert.ToString(EntropyCalculator.calculate(tableExter.getNewMatrix(calcDlg.hammingDist, calcDlg.standDeviation))) + " бит");
                     }
                 }
             }
@@ -190,5 +208,83 @@ namespace Calculator
                 ErrorHandler.showErrorMessage(ex.Message);
             }
         }
+
+        #region Вспомогательные методы класса
+
+        private double[] getIterRows(int[] row_indexes)
+        {
+            double[] result = new double[4];
+            
+            for (int i = 0; i < 4; i++)
+                result[i] = Convert.ToDouble(dataGridView1.Rows[row_indexes[i]]);
+
+            return result;
+        }
+
+        private double[] getIterCols(int[] col_indexes)
+        {
+            double[] result = new double[4];
+
+            for (int i = 0; i < 4; i++)
+                result[i] = Convert.ToDouble(dataGridView1.Columns[col_indexes[i]]);
+
+            return result;
+        }
+
+        private double[] getDoubleValuesFromColumnsOfTable(DataGridViewColumnCollection input)
+        {
+            double[] result = new double[input.Count - 1];
+
+            try
+            {
+                for (int i = 0; i < input.Count; i++)
+                    result.Append(Convert.ToDouble(input[i]));
+            }
+
+            catch (Exception e)
+            {
+                ErrorHandler.showErrorMessage(e.Message + '\n' + e.StackTrace);
+            }
+
+            return result;
+        }
+
+        private double[] getDoubleValuesFromRowsOfTable(DataGridViewRowCollection input)
+        {
+            double[] result = new double[input.Count - 1];
+
+            try
+            {
+                for (int i = 0; i < input.Count; i++)
+                    result.Append(Convert.ToDouble(input[i].DataBoundItem));
+            }
+
+            catch (Exception e)
+            {
+                ErrorHandler.showErrorMessage(e.Message + '\n' + e.StackTrace);
+            }
+
+            return result;
+        }
+
+        private double[,] getDoubleValuesFromTable(int[] rows, int[] cols)
+        {
+            double[,] result = new double[2, 2];
+
+            double[,] tmp = new double[dataGridView1.Rows.Count, dataGridView1.Columns.Count];
+
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                for (int j = 0; j < dataGridView1.Columns.Count; j++)
+                    tmp[i, j] = Convert.ToDouble(dataGridView1[j, i]);
+
+            result[0, 0] = tmp[rows[0], cols[0]];
+            result[0, 1] = tmp[rows[0], cols[1]];
+            result[1, 0] = tmp[rows[1], rows[0]];
+            result[1, 1] = tmp[rows[1], rows[1]];
+
+            return result;
+        }
+
+        #endregion
     }
 }
