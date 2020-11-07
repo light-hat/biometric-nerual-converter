@@ -176,28 +176,53 @@ namespace Calculator
             }
         }
 
+        /// <summary>
+        /// Непосредственно вычисление значения
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void вычислениеЗначенияToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
+                // Вызываем диалоговую форму, запрашиваем у пользователя входные данные
                 using (var calcDlg = new calculateDlg())
                 {
                     var result = calcDlg.ShowDialog();
 
-                    if (result == DialogResult.OK)
+                    if (result == DialogResult.OK) // Постараюсь внятно растолковать, что тут происходит...
                     {
-                        int[] iter_matrix_rows_indexes = InterpolSearch.execute(getDoubleValuesFromRowsOfTable(dataGridView1.Rows), calcDlg.hammingDist);
-                        int[] iter_matrix_cols_indexes = InterpolSearch.execute(getDoubleValuesFromColumnsOfTable(dataGridView1.Columns), calcDlg.standDeviation);
+                        double[] full_table_head_rows = getDoubleValuesFromHeadersOfRows(); // Заголовки строк для области данных во всей таблице
+                        double[] full_table_head_cols = getDoubleValuesFromHeadersOfColumns(); // Заголовки для столбцов из области данных во всей таблице
+                        double[,] full_table_data = getDoubleValuesFromData(); // Непосредственно табличные значения из области данных, тоже вся таблица
 
-                        double[,] iter_matrix = new double[2, 2];
-                        iter_matrix = getDoubleValuesFromTable(iter_matrix_rows_indexes, iter_matrix_cols_indexes);
+                        int[] iter_matrix_rows_indexes = InterpolSearch.execute(full_table_head_rows, calcDlg.hammingDist); // Индексы заголовков строк искомых элементов в массиве, созданном выше. Важный момент, этот индекс не соответствует индексу из таблицы, что у пользователя на экране.
+                        int[] iter_matrix_cols_indexes = InterpolSearch.execute(full_table_head_cols, calcDlg.standDeviation); // Индексы заголовков столбцов для искомых в таблице данных
 
-                        double[] iter_matrix_rows = getIterRows(iter_matrix_rows_indexes);
-                        double[] iter_matrix_cols = getIterCols(iter_matrix_cols_indexes);
+                        double[] iter_matrix_row_heads = new double[2]; // Непосредственно заголовки строк искомых элементов
+                        double[] iter_matrix_col_heads = new double[2]; // Заголовки столбцов искомых элементов
 
-                        TableExtender tableExter = new TableExtender(iter_matrix, iter_matrix_rows_indexes, iter_matrix_cols_indexes);
-                        tableExter.extend();
+                        for (int i = 0; i < 2; i++) // Присваиваем значения двум последним массивам
+                        {
+                            iter_matrix_col_heads[i] = full_table_head_cols[iter_matrix_cols_indexes[i]];
+                            iter_matrix_row_heads[i] = full_table_head_rows[iter_matrix_rows_indexes[i]];
+                        }
 
+                        double[,] iter_matrix = new double[2, 2]; // Здесь будут храниться табличные данные, над которыми будут производиться вычисления
+
+                        ////// dataGridView1.Columns[2].HeaderText; - заголовок столбца
+                        ////// dataGridView1[0, 1].Value; - заголовок строки
+                        ////// dataGridView1[0, 2].Value; - данные непосредственно
+
+                        // Запись преобразуемых табличных данных
+                        for (int i = 0; i < 2; i++)
+                            for (int j = 0; j < 2; j++)
+                                iter_matrix[i, j] = full_table_data[iter_matrix_rows_indexes[i], iter_matrix_cols_indexes[j]];
+
+                        TableExtender tableExter = new TableExtender(iter_matrix, iter_matrix_row_heads, iter_matrix_col_heads); // Передаём табличные значения, над которыми будут производиться вычисления, на вход конструктора класса, который реализует расширение таблицы
+                        tableExter.extend(); // Вызываем метод, выполняющий расширение таблицы
+
+                        // Вызываем метод для получения новой таблицы, результат работы которого передаём статическому методу класса, отвечающего за вычисление среднего значения энтропии. Результат в свою очередь выводится в сообщении.
                         MessageBox.Show("Результат по первой итерации: " + Convert.ToString(EntropyCalculator.calculate(tableExter.getNewMatrix(calcDlg.hammingDist, calcDlg.standDeviation))) + " бит");
                     }
                 }
@@ -209,82 +234,49 @@ namespace Calculator
             }
         }
 
-        #region Вспомогательные методы класса
-
-        private double[] getIterRows(int[] row_indexes)
+        /// <summary>
+        /// Преобразует заголовки строк таблицы в массив дробных чисел
+        /// </summary>
+        /// <returns>Математическое ожидание Хэмминга</returns>
+        private double[] getDoubleValuesFromHeadersOfRows()
         {
-            double[] result = new double[4];
-            
-            for (int i = 0; i < 4; i++)
-                result[i] = Convert.ToDouble(dataGridView1.Rows[row_indexes[i]]);
+            double[] result = new double[dataGridView1.Rows.Count - 1];
 
-            return result;
-        }
-
-        private double[] getIterCols(int[] col_indexes)
-        {
-            double[] result = new double[4];
-
-            for (int i = 0; i < 4; i++)
-                result[i] = Convert.ToDouble(dataGridView1.Columns[col_indexes[i]]);
-
-            return result;
-        }
-
-        private double[] getDoubleValuesFromColumnsOfTable(DataGridViewColumnCollection input)
-        {
-            double[] result = new double[input.Count - 1];
-
-            try
+            for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
             {
-                for (int i = 0; i < input.Count; i++)
-                    result.Append(Convert.ToDouble(input[i]));
-            }
-
-            catch (Exception e)
-            {
-                ErrorHandler.showErrorMessage(e.Message + '\n' + e.StackTrace);
+                result[i] = Convert.ToDouble(dataGridView1[1, i].Value);
             }
 
             return result;
         }
 
-        private double[] getDoubleValuesFromRowsOfTable(DataGridViewRowCollection input)
+        /// <summary>
+        /// Преобразует заголовки столбцов таблицы в массив дробных чисел
+        /// </summary>
+        /// <returns>Стандартное отклонение расстояний Хэмминга</returns>
+        private double[] getDoubleValuesFromHeadersOfColumns()
         {
-            double[] result = new double[input.Count - 1];
+            double[] result = new double[dataGridView1.Columns.Count - 2];
 
-            try
-            {
-                for (int i = 0; i < input.Count; i++)
-                    result.Append(Convert.ToDouble(input[i].DataBoundItem));
-            }
-
-            catch (Exception e)
-            {
-                ErrorHandler.showErrorMessage(e.Message + '\n' + e.StackTrace);
-            }
+            result[0] = Convert.ToDouble(dataGridView1.Columns[2].HeaderText);
+            result[1] = Convert.ToDouble(dataGridView1.Columns[3].HeaderText);
 
             return result;
         }
 
-        private double[,] getDoubleValuesFromTable(int[] rows, int[] cols)
+        /// <summary>
+        /// Преобразует данные в таблице в дробные числа. Имеется в виду чисто область данных.
+        /// </summary>
+        /// <returns>Область данных в таблице</returns>
+        private double[,] getDoubleValuesFromData()
         {
-            double[,] result = new double[2, 2];
+            double[,] result = new double[dataGridView1.Rows.Count - 1, dataGridView1.Columns.Count - 2];
 
-            double[,] tmp = new double[dataGridView1.Rows.Count, dataGridView1.Columns.Count];
-
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                for (int j = 0; j < dataGridView1.Columns.Count; j++)
-                    tmp[i, j] = Convert.ToDouble(dataGridView1[j, i]);
-
-            result[0, 0] = tmp[rows[0], cols[0]];
-            result[0, 1] = tmp[rows[0], cols[1]];
-            result[1, 0] = tmp[rows[1], rows[0]];
-            result[1, 1] = tmp[rows[1], rows[1]];
+            for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
+                for (int j = 0; j < dataGridView1.Columns.Count - 2; j++)
+                    result[i, j] = Convert.ToDouble(dataGridView1[j + 2, i].Value);
 
             return result;
         }
-
-        #endregion
     }
 }

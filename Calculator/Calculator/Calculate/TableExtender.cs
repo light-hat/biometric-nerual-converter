@@ -11,7 +11,7 @@
         /// <param name="inp_matrix">Двумерный массив дробных чисел на 4 элемента</param>
         /// <param name="rows">Заголовки строк расширяемой таблицы, содержит 2 элемента</param>
         /// <param name="columns">Заголовки столбцов расширяемой таблицы, содержит 2 элемента</param>
-        public TableExtender(double[,] inp_matrix, int[] inp_rows, int[] inp_columns)
+        public TableExtender(double[,] inp_matrix, double[] inp_rows, double[] inp_columns)
         {
             // Непосредственно табличные значения
             _a[0, 0] = inp_matrix[0, 0];
