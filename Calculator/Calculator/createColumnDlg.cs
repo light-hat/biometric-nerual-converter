@@ -8,10 +8,16 @@ namespace Calculator
     /// </summary>
     public partial class createColumnDlg : Form
     {
+        #region Конструктор
+
         public createColumnDlg()
         {
             InitializeComponent();
         }
+
+        #endregion
+
+        #region Обработчики кликов
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -26,9 +32,15 @@ namespace Calculator
             this.Close();
         }
 
+        #endregion
+
+        #region Поле, используемое как возвращаемое значение
+
         /// <summary>
         /// Возвращаемое значение формы
         /// </summary>
         public string returnValue { get; set; }
+
+        #endregion
     }
 }

@@ -81,7 +81,7 @@
     <Compile Include="createColumnDlg.Designer.cs">
       <DependentUpon>createColumnDlg.cs</DependentUpon>
     </Compile>
-    <Compile Include="Database\SQLiteHelher.cs" />
+    <Compile Include="Database\SQLiteHelper.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

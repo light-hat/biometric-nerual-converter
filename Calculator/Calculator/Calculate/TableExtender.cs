@@ -5,6 +5,8 @@
     /// </summary>
     public class TableExtender
     {
+        #region Конструктор
+
         /// <summary>
         /// Конструктор класса
         /// </summary>
@@ -27,6 +29,10 @@
             _table_cols[0] = inp_columns[0];
             _table_cols[2] = inp_columns[1];
         }
+
+        #endregion
+
+        #region Методы
 
         /// <summary>
         /// Непосредственно расширение
@@ -68,6 +74,10 @@
             return final_matrix;
         }
 
+        #endregion
+
+        #region Поля
+
         /// <summary>
         /// Расширенная таблица на 9 элементов, где производится следующая итерация поиска
         /// </summary>
@@ -82,5 +92,7 @@
         /// Столбцы расширенной таблицы
         /// </summary>
         private double[] _table_cols = new double[3];
+
+        #endregion
     }
 }

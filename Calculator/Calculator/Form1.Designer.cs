@@ -32,8 +32,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Calculator));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.базаДанныхToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.открытьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сформироватьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.открытьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сохранитьтСформированнуюТаблицуToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.вычислениеЗначенияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -61,19 +61,12 @@
             // базаДанныхToolStripMenuItem
             // 
             this.базаДанныхToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.открытьToolStripMenuItem,
             this.сформироватьToolStripMenuItem,
+            this.открытьToolStripMenuItem,
             this.сохранитьтСформированнуюТаблицуToolStripMenuItem});
             this.базаДанныхToolStripMenuItem.Name = "базаДанныхToolStripMenuItem";
             this.базаДанныхToolStripMenuItem.Size = new System.Drawing.Size(82, 24);
             this.базаДанныхToolStripMenuItem.Text = "Таблица";
-            // 
-            // открытьToolStripMenuItem
-            // 
-            this.открытьToolStripMenuItem.Name = "открытьToolStripMenuItem";
-            this.открытьToolStripMenuItem.Size = new System.Drawing.Size(276, 26);
-            this.открытьToolStripMenuItem.Text = "Открыть созданную ранее";
-            this.открытьToolStripMenuItem.Click += new System.EventHandler(this.открытьToolStripMenuItem_Click);
             // 
             // сформироватьToolStripMenuItem
             // 
@@ -82,11 +75,18 @@
             this.сформироватьToolStripMenuItem.Text = "Сформировать новую";
             this.сформироватьToolStripMenuItem.Click += new System.EventHandler(this.сформироватьToolStripMenuItem_Click);
             // 
+            // открытьToolStripMenuItem
+            // 
+            this.открытьToolStripMenuItem.Name = "открытьToolStripMenuItem";
+            this.открытьToolStripMenuItem.Size = new System.Drawing.Size(276, 26);
+            this.открытьToolStripMenuItem.Text = "Открыть созданную ранее";
+            this.открытьToolStripMenuItem.Click += new System.EventHandler(this.открытьToolStripMenuItem_Click);
+            // 
             // сохранитьтСформированнуюТаблицуToolStripMenuItem
             // 
             this.сохранитьтСформированнуюТаблицуToolStripMenuItem.Name = "сохранитьтСформированнуюТаблицуToolStripMenuItem";
             this.сохранитьтСформированнуюТаблицуToolStripMenuItem.Size = new System.Drawing.Size(276, 26);
-            this.сохранитьтСформированнуюТаблицуToolStripMenuItem.Text = "Сохранить";
+            this.сохранитьтСформированнуюТаблицуToolStripMenuItem.Text = "Сохранить текущую";
             this.сохранитьтСформированнуюТаблицуToolStripMenuItem.Click += new System.EventHandler(this.сохранитьтСформированнуюТаблицуToolStripMenuItem_Click);
             // 
             // вычислениеЗначенияToolStripMenuItem

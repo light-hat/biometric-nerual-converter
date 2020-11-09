@@ -1,19 +1,27 @@
 ﻿using Calculator.AdditionalModules;
+using Calculator.Database;
 using Calculator.Calculate;
 using System;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace Calculator
 {
     public partial class Calculator : Form
     {
+        #region Конструктор
+
         public Calculator()
         {
             InitializeComponent();
 
             dataGridView1.MultiSelect = false;
         }
+
+        #endregion
+
+        #region Обработчики кликов
+
+        #region Манипуляции с файлом базы данных
 
         /// <summary>
         /// Создаёт шаблон таблицы связи значений энтропии и математического
@@ -84,7 +92,28 @@ namespace Calculator
         {
             try
             {
-                // ...
+                if (_path_to_opened_db == null)
+                {
+                    SaveFileDialog saveDialog = new SaveFileDialog();
+                    saveDialog.Title = "Открыть файл базы данных";
+                    saveDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+                    DialogResult save_result = saveDialog.ShowDialog();
+
+                    if (save_result == DialogResult.OK || save_result == DialogResult.Yes)
+                    {
+                        SQLiteHelper sqHelper = new SQLiteHelper(saveDialog.FileName);
+                        sqHelper.writeDB(getStringValuesFromHeadersOfColumns());
+                    }
+                }
+
+                else
+                {
+                    SQLiteHelper sqHelper = new SQLiteHelper(_path_to_opened_db);
+
+                    // И чё-то надо делать со старыми записями................
+                    sqHelper.writeDB(getStringValuesFromHeadersOfColumns());
+                }
             }
 
             catch (Exception ex)
@@ -92,6 +121,10 @@ namespace Calculator
                 ErrorHandler.showErrorMessage(ex.Message);
             }
         }
+
+        #endregion
+
+        #region Манипуляции с таблицей на экране пользователя
 
         /// <summary>
         /// Добавление в таблицу нового столбца.
@@ -176,6 +209,10 @@ namespace Calculator
             }
         }
 
+        #endregion
+
+        #region Непосредственно вычисление значения
+
         /// <summary>
         /// Непосредственно вычисление значения
         /// </summary>
@@ -210,10 +247,6 @@ namespace Calculator
 
                         double[,] iter_matrix = new double[2, 2]; // Здесь будут храниться табличные данные, над которыми будут производиться вычисления
 
-                        ////// dataGridView1.Columns[2].HeaderText; - заголовок столбца
-                        ////// dataGridView1[0, 1].Value; - заголовок строки
-                        ////// dataGridView1[0, 2].Value; - данные непосредственно
-
                         // Запись преобразуемых табличных данных
                         for (int i = 0; i < 2; i++)
                             for (int j = 0; j < 2; j++)
@@ -222,8 +255,20 @@ namespace Calculator
                         TableExtender tableExter = new TableExtender(iter_matrix, iter_matrix_row_heads, iter_matrix_col_heads); // Передаём табличные значения, над которыми будут производиться вычисления, на вход конструктора класса, который реализует расширение таблицы
                         tableExter.extend(); // Вызываем метод, выполняющий расширение таблицы
 
+                        MessageBox.Show(string.Format("Усреднение найденных значений: {0} бит", EntropyCalculator.calculate(new double[4] { iter_matrix[0, 0], iter_matrix[0, 1], iter_matrix[1, 0], iter_matrix[1, 1] })));
+
+                        double iter_ans = 0;
+
+                        for (int i = 0; i < calcDlg.iterations; i++)
+                        {
+                            TableExtender iterTableExtender = new TableExtender(iter_matrix, iter_matrix_row_heads, iter_matrix_col_heads)
+                            iter_ans = iterTableExter.getNewMatrix(calcDlg.hammingDist, calcDlg.standDeviation)
+
+                            MessageBox.Show(string.Format("Результат по {0}-й итерации: {1} бит", Convert.ToString(i + 1), Convert.ToString(iter_ans)));
+                        }
+
                         // Вызываем метод для получения новой таблицы, результат работы которого передаём статическому методу класса, отвечающего за вычисление среднего значения энтропии. Результат в свою очередь выводится в сообщении.
-                        MessageBox.Show("Результат по первой итерации: " + Convert.ToString(EntropyCalculator.calculate(tableExter.getNewMatrix(calcDlg.hammingDist, calcDlg.standDeviation))) + " бит");
+                        MessageBox.Show("Результат по первой итерации: " + Convert.ToString(EntropyCalculator.calculate()) + " бит");
                     }
                 }
             }
@@ -233,6 +278,12 @@ namespace Calculator
                 ErrorHandler.showErrorMessage(ex.Message);
             }
         }
+
+        #endregion
+
+        #endregion
+
+        #region Вспомогательные методы
 
         /// <summary>
         /// Преобразует заголовки строк таблицы в массив дробных чисел
@@ -258,8 +309,11 @@ namespace Calculator
         {
             double[] result = new double[dataGridView1.Columns.Count - 2];
 
-            result[0] = Convert.ToDouble(dataGridView1.Columns[2].HeaderText);
-            result[1] = Convert.ToDouble(dataGridView1.Columns[3].HeaderText);
+            //result[0] = Convert.ToDouble(dataGridView1.Columns[2].HeaderText);
+            //result[1] = Convert.ToDouble(dataGridView1.Columns[3].HeaderText);
+
+            for (int i = 0; i < dataGridView1.Columns.Count - 2; i++)
+                result[i] = Convert.ToDouble(dataGridView1.Columns[i + 2].HeaderText);
 
             return result;
         }
@@ -267,7 +321,7 @@ namespace Calculator
         /// <summary>
         /// Преобразует данные в таблице в дробные числа. Имеется в виду чисто область данных.
         /// </summary>
-        /// <returns>Область данных в таблице</returns>
+        /// <returns>Табличные данные</returns>
         private double[,] getDoubleValuesFromData()
         {
             double[,] result = new double[dataGridView1.Rows.Count - 1, dataGridView1.Columns.Count - 2];
@@ -278,5 +332,30 @@ namespace Calculator
 
             return result;
         }
+
+        /// <summary>
+        /// Возвращает заголовки столбцов таблицы, отвечающих за значения cтандартного отклонения расстояний Хэмминга
+        /// </summary>
+        /// <returns>Массив строк, соответствующих стандартному отклонению расстояний Хэмминга</returns>
+        private string[] getStringValuesFromHeadersOfColumns()
+        {
+            string[] result = new string[dataGridView1.Columns.Count - 2];
+
+            for (int i = 0; i < dataGridView1.Columns.Count - 2; i++)
+                result[i] = dataGridView1.Columns[i + 2].HeaderText;
+
+            return result;
+        }
+
+        #endregion
+
+        #region Поля класса
+
+        /// <summary>
+        /// Поле класса для хранения пути до обрабатываемой базы данных. Если null - значит база данных не открыта
+        /// </summary>
+        private string _path_to_opened_db;
+
+        #endregion
     }
 }
