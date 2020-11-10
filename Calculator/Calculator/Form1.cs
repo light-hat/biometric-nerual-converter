@@ -222,12 +222,11 @@ namespace Calculator
         {
             try
             {
-                // Вызываем диалоговую форму, запрашиваем у пользователя входные данные
-                using (var calcDlg = new calculateDlg())
+                using (var calcDlg = new calculateDlg()) // Создаём экземпляр диалоговой формы
                 {
-                    var result = calcDlg.ShowDialog();
+                    var result = calcDlg.ShowDialog(); // Вызываем диалоговую форму, запрашиваем у пользователя входные данные
 
-                    if (result == DialogResult.OK) // Постараюсь внятно растолковать, что тут происходит...
+                    if (result == DialogResult.OK) // Постараюсь как можно внятнее растолковать, что тут происходит...
                     {
                         double[] full_table_head_rows = getDoubleValuesFromHeadersOfRows(); // Заголовки строк для области данных во всей таблице
                         double[] full_table_head_cols = getDoubleValuesFromHeadersOfColumns(); // Заголовки для столбцов из области данных во всей таблице
@@ -247,28 +246,31 @@ namespace Calculator
 
                         double[,] iter_matrix = new double[2, 2]; // Здесь будут храниться табличные данные, над которыми будут производиться вычисления
 
-                        // Запись преобразуемых табличных данных
+                        // Запись преобразуемых табличных данных в двумерный массив, который будет обрабатываться дальше
                         for (int i = 0; i < 2; i++)
                             for (int j = 0; j < 2; j++)
                                 iter_matrix[i, j] = full_table_data[iter_matrix_rows_indexes[i], iter_matrix_cols_indexes[j]];
 
-                        TableExtender tableExter = new TableExtender(iter_matrix, iter_matrix_row_heads, iter_matrix_col_heads); // Передаём табличные значения, над которыми будут производиться вычисления, на вход конструктора класса, который реализует расширение таблицы
-                        tableExter.extend(); // Вызываем метод, выполняющий расширение таблицы
+                        MessageBox.Show(string.Format("Усреднение найденных значений: {0} бит", EntropyCalculator.calculate(iter_matrix))); // Выводим среднее значение
 
-                        MessageBox.Show(string.Format("Усреднение найденных значений: {0} бит", EntropyCalculator.calculate(new double[4] { iter_matrix[0, 0], iter_matrix[0, 1], iter_matrix[1, 0], iter_matrix[1, 1] })));
+                        double iter_entropy = 0; // Значение энтропии, вычисленное на каждой итерации
 
-                        double iter_ans = 0;
+                        IterTableStruct iter_table = new IterTableStruct(); // Структура таблицы
+                        iter_table.matrix = iter_matrix; // Записываем начальные табличные значения
+                        iter_table.row_headers = iter_matrix_row_heads; // Записывам заголовки строк
+                        iter_table.column_headers = iter_matrix_col_heads; // Записываем заголовки столбцов
 
-                        for (int i = 0; i < calcDlg.iterations; i++)
+                        for (int i = 0; i < calcDlg.iterations; i++) // Цикл по количеству итераций
                         {
-                            TableExtender iterTableExtender = new TableExtender(iter_matrix, iter_matrix_row_heads, iter_matrix_col_heads)
-                            iter_ans = iterTableExter.getNewMatrix(calcDlg.hammingDist, calcDlg.standDeviation)
+                            TableExtender iterTableExter = new TableExtender(iter_table); // Создаём экземпляр класса для расширения таблицы на текущей итерации
+                            iterTableExter.extend(); // Расширяем таблицу
 
-                            MessageBox.Show(string.Format("Результат по {0}-й итерации: {1} бит", Convert.ToString(i + 1), Convert.ToString(iter_ans)));
+                            iter_table = iterTableExter.getNewMatrix(calcDlg.hammingDist, calcDlg.standDeviation); // Получаем новую таблицу
+
+                            iter_entropy = EntropyCalculator.calculate(iter_table.matrix); // Вычисляем среднее значение энтропии на данной итерации
+
+                            MessageBox.Show(string.Format("Результат по {0}-й итерации: {1} бит", Convert.ToString(i + 1), Convert.ToString(iter_entropy))); // Выводим результат
                         }
-
-                        // Вызываем метод для получения новой таблицы, результат работы которого передаём статическому методу класса, отвечающего за вычисление среднего значения энтропии. Результат в свою очередь выводится в сообщении.
-                        MessageBox.Show("Результат по первой итерации: " + Convert.ToString(EntropyCalculator.calculate()) + " бит");
                     }
                 }
             }

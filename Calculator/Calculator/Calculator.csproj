@@ -74,6 +74,7 @@
     </Compile>
     <Compile Include="Calculate\EntropyCalculator.cs" />
     <Compile Include="Calculate\InterpolSearch.cs" />
+    <Compile Include="Calculate\IterTableStruct.cs" />
     <Compile Include="Calculate\TableExtender.cs" />
     <Compile Include="createColumnDlg.cs">
       <SubType>Form</SubType>
