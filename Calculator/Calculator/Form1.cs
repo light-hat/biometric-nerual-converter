@@ -3,6 +3,7 @@ using Calculator.Database;
 using Calculator.Calculate;
 using System;
 using System.Windows.Forms;
+using System.Data;
 
 namespace Calculator
 {
@@ -41,6 +42,8 @@ namespace Calculator
                     switch (answer)
                     {
                         case true:
+                            _path_to_opened_db = null; // Сбрасываем путь до обрабатываемого файла
+
                             // Полная зачистка
                             dataGridView1.Rows.Clear();
                             dataGridView1.Columns.Clear();
@@ -74,20 +77,17 @@ namespace Calculator
             {
                 try
                 {
-                    OpenFileDialog openFile = new OpenFileDialog();
-                    openFile.Title = "Открыть файл базы данных";
-                    openFile.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-
-                    if (ErrorHandler.processingQuestion("Вы не сохранили таблицу. Если вы сейчас откроете новую таблицу, вы можете потерять данные. Точно хотите продолжить?"))
+                    if (_path_to_opened_db != null)
                     {
-                        DialogResult result = openFile.ShowDialog();
-
-                        if (result == DialogResult.OK || result == DialogResult.Yes)
+                        if (ErrorHandler.processingQuestion("Вы уверены, что сохранили предыдущую таблицу? Если нет, то сначала сохраните её, иначе данные могут быть потеряны"))
                         {
-                            _path_to_opened_db = openFile.FileName;
-
-                            // TODO
+                            callTableReader();
                         }
+                    }
+
+                    else
+                    {
+                        callTableReader();
                     }
                 }
 
@@ -130,6 +130,8 @@ namespace Calculator
                             }
 
                             sqHelper.writeDataInDB(set_up_data, dataGridView1.Rows.Count - 1, dataGridView1.Columns.Count);
+
+                            _path_to_opened_db = saveDialog.FileName;
                         }
                     }
 
@@ -137,6 +139,18 @@ namespace Calculator
                     {
                         SQLiteHelper sqHelper = new SQLiteHelper(_path_to_opened_db);
                         sqHelper.preparateTable(getStringValuesFromHeadersOfColumns());
+
+                        string[,] set_up_data = new string[dataGridView1.Rows.Count - 1, dataGridView1.Columns.Count];
+
+                        for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
+                        {
+                            for (int j = 0; j < dataGridView1.Columns.Count; j++)
+                            {
+                                set_up_data[i, j] = Convert.ToString(dataGridView1[j, i].Value);
+                            }
+                        }
+
+                        sqHelper.writeDataInDB(set_up_data, dataGridView1.Rows.Count - 1, dataGridView1.Columns.Count);
                     }
                 }
 
@@ -335,9 +349,6 @@ namespace Calculator
         {
             double[] result = new double[dataGridView1.Columns.Count - 2];
 
-            //result[0] = Convert.ToDouble(dataGridView1.Columns[2].HeaderText);
-            //result[1] = Convert.ToDouble(dataGridView1.Columns[3].HeaderText);
-
             for (int i = 0; i < dataGridView1.Columns.Count - 2; i++)
                 result[i] = Convert.ToDouble(dataGridView1.Columns[i + 2].HeaderText);
 
@@ -371,6 +382,46 @@ namespace Calculator
                 result[i] = dataGridView1.Columns[i + 2].HeaderText;
 
             return result;
+        }
+
+        /// <summary>
+        /// Вызывает метод чтения базы данных и выводит результат на экран
+        /// </summary>
+        private void callTableReader()
+        {
+            OpenFileDialog openFile = new OpenFileDialog();
+            openFile.Title = "Открыть файл базы данных";
+            openFile.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+            DialogResult result = openFile.ShowDialog();
+
+            if (result == DialogResult.OK || result == DialogResult.Yes)
+            {
+                _path_to_opened_db = openFile.FileName;
+
+                SQLiteHelper sqHelper = new SQLiteHelper(_path_to_opened_db);
+
+                OpenedTableStruct ret_table = new OpenedTableStruct();
+                ret_table = sqHelper.readDB();
+
+                dataGridView1.Columns.Add("number", "#");
+                dataGridView1.Columns.Add("hammdists", "E(h)");
+
+                for (int i = 2; i < ret_table.columns_headers.Length; i++)
+                {
+                    dataGridView1.Columns.Add(string.Format("stdev{0}", i - 2), ret_table.columns_headers[i]);
+                }
+
+                for (int i = 0; i < ret_table.table.GetLength(0); i++)
+                {
+                    dataGridView1.Rows.Add();
+
+                    for (int j = 0; j < ret_table.table.GetLength(1); j++)
+                    {
+                        dataGridView1[j, i].Value = ret_table.table[i, j];
+                    }
+                }
+            }
         }
 
         #endregion

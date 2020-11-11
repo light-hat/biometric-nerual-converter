@@ -1,5 +1,7 @@
 ﻿using Calculator.AdditionalModules;
 using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Data.SQLite;
 using System.IO;
@@ -32,7 +34,7 @@ namespace Calculator.Database
         /// <summary>
         /// Чтение данных из базы
         /// </summary>
-        public void readDB()
+        public OpenedTableStruct readDB()
         {
             try
             {
@@ -40,21 +42,90 @@ namespace Calculator.Database
                 {
                     case true:
                         {
-                            // TODO
+                            OpenedTableStruct table = new OpenedTableStruct();
+
+                            dbConn = new SQLiteConnection("Data Source=" + _sqlite_path + ";Version=3;");
+                            dbConn.Open();
+                            sqlCmd.Connection = dbConn;
+
+                            // Получаем количество столбцов и их названия
+
+                            sqlCmd.CommandText = "pragma table_info(test_table)";
+                            IDataReader reader = sqlCmd.ExecuteReader();
+
+                            List<string> ret_table_column_names = new List<string>();
+
+                            while (reader.Read())
+                            {
+                                ret_table_column_names.Add(reader.GetValue(1).ToString());
+                            }
+
+                            for (int i = 2; i < ret_table_column_names.Count; i++)
+                            {
+                                ret_table_column_names[i] = ret_table_column_names[i].Remove(0, 1);
+                            }
+
+                            reader.Close();
+                            reader.Dispose();
+
+                            // Читаем сами данные
+
+                            List<string> ret_table_data = new List<string>();
+
+                            sqlCmd.CommandText = "SELECT * FROM test_table;";
+                            IDataReader table_data_reader = sqlCmd.ExecuteReader();
+
+                            List<string[]> tmp_table_rows = new List<string[]>();
+
+                            while (table_data_reader.Read())
+                            {
+                                string[] tmp = new string[ret_table_column_names.Count];
+
+                                for (int i = 0; i < ret_table_column_names.Count; i++)
+                                {
+                                    tmp[i] = table_data_reader.GetValue(i).ToString();
+                                }
+
+                                tmp_table_rows.Add(tmp);
+                            }
+
+                            string[,] tmp_ret_table = new string[tmp_table_rows.Count, ret_table_column_names.Count];
+
+                            for (int i = 0; i < tmp_table_rows.Count; i++)
+                            {
+                                for (int j = 0; j < ret_table_column_names.Count; j++)
+                                {
+                                    tmp_ret_table[i, j] = tmp_table_rows[i].ToArray()[j];
+                                }
+                            }
+
+                            table_data_reader.Close();
+                            table_data_reader.Dispose();
+
+                            // Выводим ответ
+
+                            table.columns_headers = ret_table_column_names.ToArray();
+                            table.table = tmp_ret_table;
+
+                            return table;
                         }
 
-                        break;
-
                     case false:
-                        ErrorHandler.showErrorMessage("Что-то пошло не так: файла базы данных не существует");
+                        {
+                            ErrorHandler.showErrorMessage("Что-то пошло не так: этого файла базы данных не существует");
+                            return null;
+                        }
 
-                        break;
+                    default:
+                        return null;
                 }
             }
 
             catch (Exception e)
             {
                 ErrorHandler.showErrorMessage(e.Message + '\n' + e.StackTrace);
+
+                return null;
             }
         }
 
@@ -110,6 +181,9 @@ namespace Calculator.Database
 
                     request_part = "";
                 }
+
+                dbConn.Close();
+                dbConn.Dispose();
             }
 
             catch (Exception e)
@@ -170,10 +244,6 @@ namespace Calculator.Database
         /// <param name="column_names"></param>
         private void reloadDB(string[] column_names)
         {
-            // 
-            sqlCmd.CommandText = string.Format("DROP TABLE IF EXISTS test_table");
-            sqlCmd.ExecuteNonQuery();
-
             string command_col_names = "";
 
             foreach (string column in column_names)
@@ -196,7 +266,10 @@ namespace Calculator.Database
             dbConn.Open();
             sqlCmd.Connection = dbConn;
 
-            sqlCmd.CommandText = string.Format("CREATE TABLE test_table (id INTEGER PRIMARY KEY AUTOINCREMENT, hammdists TEXT {0})", command_col_names);
+            sqlCmd.CommandText = string.Format("DROP TABLE IF EXISTS test_table");
+            sqlCmd.ExecuteNonQuery();
+
+            sqlCmd.CommandText = string.Format("CREATE TABLE IF NOT EXISTS test_table (id INTEGER PRIMARY KEY AUTOINCREMENT, hammdists TEXT {0})", command_col_names);
             sqlCmd.ExecuteNonQuery();
         }
 
