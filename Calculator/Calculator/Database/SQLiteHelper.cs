@@ -3,6 +3,8 @@ using System;
 using System.Data.SqlClient;
 using System.Data.SQLite;
 using System.IO;
+using System.Linq;
+using System.Security.Cryptography;
 
 namespace Calculator.Database
 {
@@ -57,32 +59,56 @@ namespace Calculator.Database
         }
 
         /// <summary>
-        /// Запись данных в базу
+        /// Подготовка базы данных. При необходимости создаёт файл, занимается обустройством таблицы и пр.
         /// </summary>
         /// <param name="column_names">Названия столбцов таблицы, стандартное отклонение расстояний Хэмминга</param>
-        public void writeDB(string[] column_names)
+        public void preparateTable(string[] column_names)
         {
             try
             {
                 switch (File.Exists(_sqlite_path))
                 {
                     case true:
-                        {
-                            reloadDB(column_names); // Если файл базы существует - перезаписываем в нём таблицу
-
-                            // TODO
-                        }
-
+                        reloadDB(column_names); // Если файл базы существует - перезаписываем в нём таблицу
                         break;
 
                     case false:
-                        {
-                            createNewDB(column_names); // Если нет файла базы данных - создаём его
-
-                            // sqlCmd.CommandText = string.Format("", );
-                        }
-
+                        createNewDB(column_names); // Если нет файла базы данных - создаём его
                         break;
+                }
+            }
+
+            catch (Exception e)
+            {
+                ErrorHandler.showErrorMessage(e.Message + '\n' + e.StackTrace);
+            }
+        }
+
+        /// <summary>
+        /// Запись остальных табличных данных в подготовленную таблицу
+        /// </summary>
+        /// <param name="tableData">Остальные табличные данные</param>
+        /// <param name="row_count">Количество строк в передаваемой таблице</param>
+        /// <param name="col_count">Общее количество передаваемых столбцов</param>
+        public void writeDataInDB(string[,] tableData, int row_count, int col_count)
+        {
+            try
+            {
+                string request_part = null;
+
+                for (int i = 0; i < row_count; i++)
+                {
+                    request_part += string.Format("'{0}'", tableData[i, 0]);
+
+                    for (int j = 1; j < col_count; j++)
+                    {
+                        request_part += string.Format(", '{0}'", tableData[i, j]);
+                    }
+
+                    sqlCmd.CommandText = string.Format("INSERT INTO test_table ({0}) values ({1})", _current_table_col_names, request_part);
+                    sqlCmd.ExecuteNonQuery();
+
+                    request_part = "";
                 }
             }
 
@@ -109,6 +135,16 @@ namespace Calculator.Database
                 foreach (string column in column_names)
                     command_col_names += string.Format(", c{0} TEXT", column);
 
+                string tmp_col_names = "";
+
+                tmp_col_names += "'id'";
+                tmp_col_names += ", 'hammdists'";
+
+                foreach (string col in column_names)
+                    tmp_col_names += string.Format(", 'c{0}'", col);
+
+                _current_table_col_names = tmp_col_names;
+
                 if (!File.Exists(_sqlite_path))
                     SQLiteConnection.CreateFile(_sqlite_path);
 
@@ -134,7 +170,34 @@ namespace Calculator.Database
         /// <param name="column_names"></param>
         private void reloadDB(string[] column_names)
         {
-            // TODO
+            // 
+            sqlCmd.CommandText = string.Format("DROP TABLE IF EXISTS test_table");
+            sqlCmd.ExecuteNonQuery();
+
+            string command_col_names = "";
+
+            foreach (string column in column_names)
+                command_col_names += string.Format(", c{0} TEXT", column);
+
+            string tmp_col_names = "";
+
+            tmp_col_names += "'id'";
+            tmp_col_names += ", 'hammdists'";
+
+            foreach (string col in column_names)
+                tmp_col_names += string.Format(", 'c{0}'", col);
+
+            _current_table_col_names = tmp_col_names;
+
+            if (!File.Exists(_sqlite_path))
+                SQLiteConnection.CreateFile(_sqlite_path);
+
+            dbConn = new SQLiteConnection("Data Source=" + _sqlite_path + ";Version=3;");
+            dbConn.Open();
+            sqlCmd.Connection = dbConn;
+
+            sqlCmd.CommandText = string.Format("CREATE TABLE test_table (id INTEGER PRIMARY KEY AUTOINCREMENT, hammdists TEXT {0})", command_col_names);
+            sqlCmd.ExecuteNonQuery();
         }
 
         #endregion
@@ -155,6 +218,11 @@ namespace Calculator.Database
         /// Экземпляр класса для исполнения команд, посылаемых базе данных
         /// </summary>
         private SQLiteCommand sqlCmd;
+
+        /// <summary>
+        /// Имена столбцов текущей таблицы
+        /// </summary>
+        private string _current_table_col_names;
 
         #endregion
     }
