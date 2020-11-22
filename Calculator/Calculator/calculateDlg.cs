@@ -23,7 +23,6 @@ namespace Calculator
             {
                 this.hammingDist = Convert.ToDouble(textBox1.Text);
                 this.standDeviation = Convert.ToDouble(textBox2.Text);
-                this.iterations = Convert.ToUInt16(textBox3.Text);
 
                 this.DialogResult = DialogResult.OK;
                 this.Close();
@@ -39,8 +38,6 @@ namespace Calculator
         public double hammingDist { get; set; }
 
         public double standDeviation { get; set; }
-
-        public uint iterations { get; set; }
 
         #endregion
     }

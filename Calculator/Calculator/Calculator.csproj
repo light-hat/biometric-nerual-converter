@@ -76,11 +76,11 @@
     <Compile Include="Calculate\InterpolSearch.cs" />
     <Compile Include="Calculate\IterTableStruct.cs" />
     <Compile Include="Calculate\TableExtender.cs" />
-    <Compile Include="createColumnDlg.cs">
+    <Compile Include="chooseTableDlg.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="createColumnDlg.Designer.cs">
-      <DependentUpon>createColumnDlg.cs</DependentUpon>
+    <Compile Include="chooseTableDlg.Designer.cs">
+      <DependentUpon>chooseTableDlg.cs</DependentUpon>
     </Compile>
     <Compile Include="Database\OpenedTableStruct.cs" />
     <Compile Include="Database\SQLiteHelper.cs" />
@@ -95,8 +95,8 @@
     <EmbeddedResource Include="calculateDlg.resx">
       <DependentUpon>calculateDlg.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="createColumnDlg.resx">
-      <DependentUpon>createColumnDlg.cs</DependentUpon>
+    <EmbeddedResource Include="chooseTableDlg.resx">
+      <DependentUpon>chooseTableDlg.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -110,6 +110,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="database.sqlite3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
