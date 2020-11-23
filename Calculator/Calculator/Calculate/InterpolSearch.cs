@@ -31,7 +31,6 @@
                 else
                 {
                     ans[0] = mid;
-                    //ans[1] = mid; // спорный момент
 
                     return ans;
                 }
@@ -40,7 +39,6 @@
             if (a[left] == key)
             {
                 ans[0] = left;
-                //ans[1] = left; // тоже не факт, что сработает
 
                 return ans;
             }
