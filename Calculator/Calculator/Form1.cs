@@ -144,7 +144,7 @@ namespace Calculator
 
             catch (Exception ex)
             {
-                ErrorHandler.showErrorMessage(ex.Message);
+                ErrorHandler.showErrorMessage(ex.Message + '\n' + ex.StackTrace);
             }
         }
 

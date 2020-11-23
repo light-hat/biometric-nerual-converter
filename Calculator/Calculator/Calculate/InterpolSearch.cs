@@ -15,6 +15,8 @@
         /// <returns>Массив из 2-х элементов. Содержит индексы элементов, между которыми находится искомое значение.</returns>
         public static int[] execute(double[] a, double key)
         {
+            System.Array.Sort(a);
+
             int[] ans = new int[2];
             int mid = 0, left = 0, right = a.Length - 1;
 
@@ -29,6 +31,7 @@
                 else
                 {
                     ans[0] = mid;
+                    //ans[1] = mid; // спорный момент
 
                     return ans;
                 }
@@ -37,6 +40,7 @@
             if (a[left] == key)
             {
                 ans[0] = left;
+                //ans[1] = left; // тоже не факт, что сработает
 
                 return ans;
             }

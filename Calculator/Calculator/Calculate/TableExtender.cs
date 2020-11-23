@@ -65,7 +65,7 @@
         {
             // Получение индексов искомых элементов
             int[] indexes_rows = InterpolSearch.execute(_table_rows, real_math_exp);
-            int[] indexes_cols = InterpolSearch.execute(_table_cols, real_stand_deviation);
+            int[] indexes_cols = InterpolSearch.execute(_table_cols, real_stand_deviation); // сортировать?
 
             // Формируем таблицу
 
@@ -85,7 +85,7 @@
 
             // Получаем заголовки столбцов таблицы
 
-            double[] final_cols = new double[2];
+            double[] final_cols = new double[2]; // Подозрительный тип...
 
             for (int i = 0; i < 2; i++)
                 final_cols[i] = _table_cols[indexes_cols[i]];
