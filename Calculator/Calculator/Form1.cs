@@ -130,12 +130,9 @@ namespace Calculator
                         if (File.Exists(file_name)) // Если он существует - удаляем
                             File.Delete(file_name);
 
-                        using (FileStream write_file = File.OpenWrite(file_name)) // Создаём поток для записи в файл
-                        {
-                            byte[] buffer = Encoding.UTF8.GetBytes(full_answer_str); // Получаем массив байт для записи от строки с ответом
-
-                            write_file.Write(buffer, 0, buffer.Length); // Записываем данные
-                        }
+                        using (FileStream file = File.OpenWrite(file_name)) // Создаём файловый поток для создания файла и работы с ним
+                        using (StreamWriter writer = new StreamWriter(file, Encoding.UTF8)) // Создаём поток для записи в файл
+                            writer.Write(full_answer_str); // Записываем данные в файл
 
                         Process.Start(file_name); // Запускаем файл
                     }

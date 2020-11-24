@@ -65,7 +65,7 @@
         {
             // Получение индексов искомых элементов
             int[] indexes_rows = InterpolSearch.execute(_table_rows, real_math_exp);
-            int[] indexes_cols = InterpolSearch.execute(_table_cols, real_stand_deviation); // сортировать?
+            int[] indexes_cols = InterpolSearch.execute(_table_cols, real_stand_deviation);
 
             // Формируем таблицу
 
