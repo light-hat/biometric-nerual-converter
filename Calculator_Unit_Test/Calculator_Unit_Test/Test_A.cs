@@ -1,4 +1,5 @@
-﻿using Calculator.Calculate;
+﻿using System;
+using Calculator.Calculate;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Calculator_Unit_Test
@@ -11,23 +12,248 @@ namespace Calculator_Unit_Test
     {
         #region Тестовые методы класса
 
+        #region Проверка нахождения первого элемента
         /// <summary>
         /// Данный метод класса проверяет, корректно ли находится первый элемент массива
+        /// Проверка идёт по датасету #1
         /// </summary>
         [TestMethod]
-        public void TestSearchFirstItem()
+        public void TestSearchFirstItem_DS1()
         {
-            // TODO
+            int[] real_answer = new int[2];
+            int[] expected_answer = new int[2] { 0, 0 };
+
+            real_answer = InterpolSearch.execute(FirstDataset, FirstDataset[0]);
+
+            try
+            {
+                for (int i = 0; i < 2; i++)
+                    Assert.AreEqual(real_answer[i], expected_answer[i]);
+            }
+
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine("Dataset 1 is failed. Real meaning: [" + real_answer[0] + ", " + real_answer[1] + "]; and expected: [" + expected_answer[0] + ", " + expected_answer[1] + "]");
+            }
         }
+
+        /// <summary>
+        /// Данный метод класса проверяет, корректно ли находится первый элемент массива
+        /// Проверка идёт по датасету #2
+        /// </summary>
+        [TestMethod]
+        public void TestSearchFirstItem_DS2()
+        {
+            int[] real_answer = new int[2];
+            int[] expected_answer = new int[2] { 0, 0 };
+
+            real_answer = InterpolSearch.execute(SecondDataset, SecondDataset[0]);
+
+            try
+            {
+                for (int i = 0; i < 2; i++)
+                    Assert.AreEqual(real_answer[i], expected_answer[i]);
+            }
+
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine("Dataset 2 is failed. Real meaning: [" + real_answer[0] + ", " + real_answer[1] + "]; and expected: [" + expected_answer[0] + ", " + expected_answer[1] + "]");
+            }
+        }
+
+        /// <summary>
+        /// Данный метод класса проверяет, корректно ли находится первый элемент массива
+        /// Проверка идёт по датасету #3
+        /// </summary>
+        [TestMethod]
+        public void TestSearchFirstItem_DS3()
+        {
+            int[] real_answer = new int[2];
+            int[] expected_answer = new int[2] { 0, 0 };
+
+            real_answer = InterpolSearch.execute(ThirdDataset, ThirdDataset[0]);
+
+            try
+            {
+                for (int i = 0; i < 2; i++)
+                    Assert.AreEqual(real_answer[i], expected_answer[i]);
+            }
+
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine("Dataset 3 is failed. Real meaning: [" + real_answer[0] + ", " + real_answer[1] + "]; and expected: [" + expected_answer[0] + ", " + expected_answer[1] + "]");
+            }
+        }
+
+        /// <summary>
+        /// Данный метод класса проверяет, корректно ли находится первый элемент массива
+        /// Проверка идёт по датасету #4
+        /// </summary>
+        [TestMethod]
+        public void TestSearchFirstItem_DS4()
+        {
+            int[] real_answer = new int[2];
+            int[] expected_answer = new int[2] { 0, 0 };
+
+            real_answer = InterpolSearch.execute(FourthDataset, FourthDataset[0]);
+
+            try
+            {
+                for (int i = 0; i < 2; i++)
+                    Assert.AreEqual(real_answer[i], expected_answer[i]);
+            }
+
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine("Dataset 4 is failed. Real meaning: [" + real_answer[0] + ", " + real_answer[1] + "]; and expected: [" + expected_answer[0] + ", " + expected_answer[1] + "]");
+            }
+        }
+
+        /// <summary>
+        /// Данный метод класса проверяет, корректно ли находится первый элемент массива
+        /// Проверка идёт по датасету #5
+        /// </summary>
+        [TestMethod]
+        public void TestSearchFirstItem_DS5()
+        {
+            int[] real_answer = new int[2];
+            int[] expected_answer = new int[2] { 0, 0 };
+
+            real_answer = InterpolSearch.execute(FifthDataset, FifthDataset[0]);
+
+            try
+            {
+                for (int i = 0; i < 2; i++)
+                    Assert.AreEqual(real_answer[i], expected_answer[i]);
+            }
+
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine("Dataset 5 is failed. Real meaning: [" + real_answer[0] + ", " + real_answer[1] + "]; and expected: [" + expected_answer[0] + ", " + expected_answer[1] + "]");
+            }
+        }
+
+        /// <summary>
+        /// Данный метод класса проверяет, корректно ли находится первый элемент массива
+        /// Проверка идёт по датасету #6
+        /// </summary>
+        [TestMethod]
+        public void TestSearchFirstItem_DS6()
+        {
+            int[] real_answer = new int[2];
+            int[] expected_answer = new int[2] { 0, 0 };
+
+            real_answer = InterpolSearch.execute(SixthDataset, SixthDataset[0]);
+
+            try
+            {
+                for (int i = 0; i < 2; i++)
+                    Assert.AreEqual(real_answer[i], expected_answer[i]);
+            }
+
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine("Dataset 6 is failed. Real meaning: [" + real_answer[0] + ", " + real_answer[1] + "]; and expected: [" + expected_answer[0] + ", " + expected_answer[1] + "]");
+            }
+        }
+
+        /// <summary>
+        /// Данный метод класса проверяет, корректно ли находится первый элемент массива
+        /// Проверка идёт по датасету #7
+        /// </summary>
+        [TestMethod]
+        public void TestSearchFirstItem_DS7()
+        {
+            int[] real_answer = new int[2];
+            int[] expected_answer = new int[2] { 0, 0 };
+
+            real_answer = InterpolSearch.execute(SeventhDataset, SeventhDataset[0]);
+
+            try
+            {
+                for (int i = 0; i < 2; i++)
+                    Assert.AreEqual(real_answer[i], expected_answer[i]);
+            }
+
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine("Dataset 7 is failed. Real meaning: [" + real_answer[0] + ", " + real_answer[1] + "]; and expected: [" + expected_answer[0] + ", " + expected_answer[1] + "]");
+            }
+        }
+
+        /// <summary>
+        /// Данный метод класса проверяет, корректно ли находится первый элемент массива
+        /// Проверка идёт по датасету #8
+        /// </summary>
+        [TestMethod]
+        public void TestSearchFirstItem_DS8()
+        {
+            int[] real_answer = new int[2];
+            int[] expected_answer = new int[2] { 0, 0 };
+
+            real_answer = InterpolSearch.execute(EighthDataset, EighthDataset[0]);
+
+            try
+            {
+                for (int i = 0; i < 2; i++)
+                    Assert.AreEqual(real_answer[i], expected_answer[i]);
+            }
+
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine("Dataset 8 is failed. Real meaning: [" + real_answer[0] + ", " + real_answer[1] + "]; and expected: [" + expected_answer[0] + ", " + expected_answer[1] + "]");
+            }
+        }
+
+        /// <summary>
+        /// Данный метод класса проверяет, корректно ли находится первый элемент массива
+        /// Проверка идёт по датасету #9
+        /// </summary>
+        [TestMethod]
+        public void TestSearchFirstItem_DS9()
+        {
+            int[] real_answer = new int[2];
+            int[] expected_answer = new int[2] { 0, 0 };
+
+            real_answer = InterpolSearch.execute(NinethDataset, NinethDataset[0]);
+
+            try
+            {
+                for (int i = 0; i < 2; i++)
+                    Assert.AreEqual(real_answer[i], expected_answer[i]);
+            }
+
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine("Dataset 9 is failed. Real meaning: [" + real_answer[0] + ", " + real_answer[1] + "]; and expected: [" + expected_answer[0] + ", " + expected_answer[1] + "]");
+            }
+        }
+
+        #endregion
+
+        #region Проверка нахождения последнего элемента
 
         /// <summary>
         /// Данный метод класса проверяет, корректно ли находится элемент массива, который находится в конце
         /// </summary>
         [TestMethod]
-        public void TestSearchLastItem()
+        public void TestSearchLastItem_DS1()
         {
             // TODO
         }
+
+        #endregion
+
+        #region Проверка нахождения второго элемента
 
         /// <summary>
         /// Данный метод класса проверяет, корректно ли находится второй элемент массива
@@ -38,6 +264,10 @@ namespace Calculator_Unit_Test
             // TODO
         }
 
+        #endregion
+
+        #region Проверка нахождения предпоследнего элемента
+
         /// <summary>
         /// Данный метод класса проверяет, корректно ли находится предпоследний элемент массива
         /// </summary>
@@ -46,6 +276,10 @@ namespace Calculator_Unit_Test
         {
             // TODO
         }
+
+        #endregion
+
+        #region Проверка нахождения любого существующего элемента
 
         /// <summary>
         /// Данный метод класса проверяет, корректно ли находится существующий элемент массива
@@ -56,6 +290,10 @@ namespace Calculator_Unit_Test
             // TODO
         }
 
+        #endregion
+
+        #region Проверка определения отсутствия элемента
+
         /// <summary>
         /// Данный метод класса проверяет, корректно ли определяется, что поданного на вход элемента не существует
         /// </summary>
@@ -65,6 +303,10 @@ namespace Calculator_Unit_Test
             // TODO
         }
 
+        #endregion
+
+        #region Проверка поиска значения, находящегося между соседними элементами
+
         /// <summary>
         /// Данный метод класса проверяет, корректно ли находится элемент между элементами массива
         /// </summary>
@@ -73,6 +315,8 @@ namespace Calculator_Unit_Test
         {
             // TODO
         }
+
+        #endregion
 
         #endregion
 
