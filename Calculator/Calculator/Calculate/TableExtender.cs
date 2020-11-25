@@ -85,7 +85,7 @@
 
             // Получаем заголовки столбцов таблицы
 
-            double[] final_cols = new double[2]; // Подозрительный тип...
+            double[] final_cols = new double[2];
 
             for (int i = 0; i < 2; i++)
                 final_cols[i] = _table_cols[indexes_cols[i]];
