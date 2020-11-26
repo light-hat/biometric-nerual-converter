@@ -92,3 +92,9 @@
 + System.Data.SQLite.Core;
 + System.Data.SQLite.EF6;
 + System.Data.SQLite.Linq;
+
+## Хранение данных
+...
+
+## Модульное тестирование
+...
