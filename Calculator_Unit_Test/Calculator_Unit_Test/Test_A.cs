@@ -12,360 +12,284 @@ namespace Calculator_Unit_Test
     {
         #region Тестовые методы класса
 
-        #region Проверка нахождения первого элемента
         /// <summary>
-        /// Данный метод класса проверяет, корректно ли находится первый элемент массива
-        /// Проверка идёт по датасету #1
+        /// Данный тестовый метод осуществляет проверку корректности поиска значения между первым и вторым элементом массива
         /// </summary>
         [TestMethod]
-        public void TestSearchFirstItem_DS1()
+        public void TestFirstBorderOfAllColumns()
         {
-            int[] real_answer = new int[2];
-            int[] expected_answer = new int[2] { 0, 0 };
+            int[] expected_result = new int[2] { 0, 1 };
+            int[] real_result = new int[2];
 
-            real_answer = InterpolSearch.execute(FirstDataset, FirstDataset[0]);
+            real_result = InterpolSearch.execute(AllColumnsOfTable, 21);
 
-            try
+            for (int i = 0; i < 2; i++)
             {
-                for (int i = 0; i < 2; i++)
-                    Assert.AreEqual(real_answer[i], expected_answer[i]);
-            }
+                try
+                {
+                    Assert.AreEqual(expected_result[i], real_result[i]);
+                }
 
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                Console.WriteLine("Dataset 1 is failed. Real meaning: [" + real_answer[0] + ", " + real_answer[1] + "]; and expected: [" + expected_answer[0] + ", " + expected_answer[1] + "]");
+                catch (Exception)
+                {
+                    Console.WriteLine("Test 1 failed. Expected value: " + expected_result[i] + "; real value: " + real_result[i]);
+                }
             }
         }
 
         /// <summary>
-        /// Данный метод класса проверяет, корректно ли находится первый элемент массива
-        /// Проверка идёт по датасету #2
+        /// Данный тестовый метод осуществляет проверку корректности поиска значения между предпоследним и последним элементом массива
         /// </summary>
         [TestMethod]
-        public void TestSearchFirstItem_DS2()
+        public void TestSecondBorderOfAllColumns()
         {
-            int[] real_answer = new int[2];
-            int[] expected_answer = new int[2] { 0, 0 };
+            int[] expected_result = new int[2] { AllColumnsOfTable.Length - 2, AllColumnsOfTable.Length - 1 };
+            int[] real_result = new int[2];
 
-            real_answer = InterpolSearch.execute(SecondDataset, SecondDataset[0]);
+            real_result = InterpolSearch.execute(AllColumnsOfTable, 71);
 
-            try
+            for (int i = 0; i < 2; i++)
             {
-                for (int i = 0; i < 2; i++)
-                    Assert.AreEqual(real_answer[i], expected_answer[i]);
-            }
+                try
+                {
+                    Assert.AreEqual(expected_result[i], real_result[i]);
+                }
 
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                Console.WriteLine("Dataset 2 is failed. Real meaning: [" + real_answer[0] + ", " + real_answer[1] + "]; and expected: [" + expected_answer[0] + ", " + expected_answer[1] + "]");
+                catch (Exception)
+                {
+                    Console.WriteLine("Test 2 failed. Expected value: " + expected_result[i] + "; real value: " + real_result[i]);
+                }
             }
         }
 
         /// <summary>
-        /// Данный метод класса проверяет, корректно ли находится первый элемент массива
-        /// Проверка идёт по датасету #3
+        /// Данный тестовый метод осуществляет проверку корректности поиска значения между первым и вторым элементом массива
         /// </summary>
         [TestMethod]
-        public void TestSearchFirstItem_DS3()
+        public void TestFirstBorderOfAllRows()
         {
-            int[] real_answer = new int[2];
-            int[] expected_answer = new int[2] { 0, 0 };
+            int[] expected_result = new int[2] { 0, 1 };
+            int[] real_result = new int[2];
 
-            real_answer = InterpolSearch.execute(ThirdDataset, ThirdDataset[0]);
+            real_result = InterpolSearch.execute(AllRowsOfTable, 32);
 
-            try
+            for (int i = 0; i < 2; i++)
             {
-                for (int i = 0; i < 2; i++)
-                    Assert.AreEqual(real_answer[i], expected_answer[i]);
-            }
+                try
+                {
+                    Assert.AreEqual(expected_result[i], real_result[i]);
+                }
 
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                Console.WriteLine("Dataset 3 is failed. Real meaning: [" + real_answer[0] + ", " + real_answer[1] + "]; and expected: [" + expected_answer[0] + ", " + expected_answer[1] + "]");
+                catch (Exception)
+                {
+                    Console.WriteLine("Test 3 failed. Expected value: " + expected_result[i] + "; real value: " + real_result[i]);
+                }
             }
         }
 
         /// <summary>
-        /// Данный метод класса проверяет, корректно ли находится первый элемент массива
-        /// Проверка идёт по датасету #4
+        /// Данный тестовый метод осуществляет проверку корректности поиска значения между предпоследним и последним элементом массива
         /// </summary>
         [TestMethod]
-        public void TestSearchFirstItem_DS4()
+        public void TestSecondBorderOfAllRows()
         {
-            int[] real_answer = new int[2];
-            int[] expected_answer = new int[2] { 0, 0 };
+            int[] expected_result = new int[2] { AllRowsOfTable.Length - 2, AllRowsOfTable.Length - 1 };
+            int[] real_result = new int[2];
 
-            real_answer = InterpolSearch.execute(FourthDataset, FourthDataset[0]);
+            real_result = InterpolSearch.execute(AllRowsOfTable, 147);
 
-            try
+            for (int i = 0; i < 2; i++)
             {
-                for (int i = 0; i < 2; i++)
-                    Assert.AreEqual(real_answer[i], expected_answer[i]);
-            }
+                try
+                {
+                    Assert.AreEqual(expected_result[i], real_result[i]);
+                }
 
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                Console.WriteLine("Dataset 4 is failed. Real meaning: [" + real_answer[0] + ", " + real_answer[1] + "]; and expected: [" + expected_answer[0] + ", " + expected_answer[1] + "]");
-            }
-        }
-
-        /// <summary>
-        /// Данный метод класса проверяет, корректно ли находится первый элемент массива
-        /// Проверка идёт по датасету #5
-        /// </summary>
-        [TestMethod]
-        public void TestSearchFirstItem_DS5()
-        {
-            int[] real_answer = new int[2];
-            int[] expected_answer = new int[2] { 0, 0 };
-
-            real_answer = InterpolSearch.execute(FifthDataset, FifthDataset[0]);
-
-            try
-            {
-                for (int i = 0; i < 2; i++)
-                    Assert.AreEqual(real_answer[i], expected_answer[i]);
-            }
-
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                Console.WriteLine("Dataset 5 is failed. Real meaning: [" + real_answer[0] + ", " + real_answer[1] + "]; and expected: [" + expected_answer[0] + ", " + expected_answer[1] + "]");
+                catch (Exception)
+                {
+                    Console.WriteLine("Test 4 failed. Expected value: " + expected_result[i] + "; real value: " + real_result[i]);
+                }
             }
         }
 
         /// <summary>
-        /// Данный метод класса проверяет, корректно ли находится первый элемент массива
-        /// Проверка идёт по датасету #6
+        /// Данный тестовый метод осуществляет проверку корректности поиска значения между 0-м и 1-м элементами
         /// </summary>
         [TestMethod]
-        public void TestSearchFirstItem_DS6()
+        public void TestFirstBorderOfIntThreeItemsArray()
         {
-            int[] real_answer = new int[2];
-            int[] expected_answer = new int[2] { 0, 0 };
+            int[] expected_result = new int[2] { 0, 1 };
+            int[] real_result = new int[2];
 
-            real_answer = InterpolSearch.execute(SixthDataset, SixthDataset[0]);
+            real_result = InterpolSearch.execute(IntThreeItemsArray, 70.5);
 
-            try
+            for (int i = 0; i < 2; i++)
             {
-                for (int i = 0; i < 2; i++)
-                    Assert.AreEqual(real_answer[i], expected_answer[i]);
-            }
+                try
+                {
+                    Assert.AreEqual(expected_result[i], real_result[i]);
+                }
 
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                Console.WriteLine("Dataset 6 is failed. Real meaning: [" + real_answer[0] + ", " + real_answer[1] + "]; and expected: [" + expected_answer[0] + ", " + expected_answer[1] + "]");
-            }
-        }
-
-        /// <summary>
-        /// Данный метод класса проверяет, корректно ли находится первый элемент массива
-        /// Проверка идёт по датасету #7
-        /// </summary>
-        [TestMethod]
-        public void TestSearchFirstItem_DS7()
-        {
-            int[] real_answer = new int[2];
-            int[] expected_answer = new int[2] { 0, 0 };
-
-            real_answer = InterpolSearch.execute(SeventhDataset, SeventhDataset[0]);
-
-            try
-            {
-                for (int i = 0; i < 2; i++)
-                    Assert.AreEqual(real_answer[i], expected_answer[i]);
-            }
-
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                Console.WriteLine("Dataset 7 is failed. Real meaning: [" + real_answer[0] + ", " + real_answer[1] + "]; and expected: [" + expected_answer[0] + ", " + expected_answer[1] + "]");
+                catch (Exception)
+                {
+                    Console.WriteLine("Test 5 failed. Expected value: " + expected_result[i] + "; real value: " + real_result[i]);
+                }
             }
         }
 
         /// <summary>
-        /// Данный метод класса проверяет, корректно ли находится первый элемент массива
-        /// Проверка идёт по датасету #8
+        /// Данный тестовый метод осуществляет проверку корректности поиска значения между 1-м и 2-м элементами
         /// </summary>
         [TestMethod]
-        public void TestSearchFirstItem_DS8()
+        public void TestSecondBorderOfIntThreeItemsArray()
         {
-            int[] real_answer = new int[2];
-            int[] expected_answer = new int[2] { 0, 0 };
+            int[] expected_result = new int[2] { 1, 2 };
+            int[] real_result = new int[2];
 
-            real_answer = InterpolSearch.execute(EighthDataset, EighthDataset[0]);
+            real_result = InterpolSearch.execute(IntThreeItemsArray, 71.8);
 
-            try
+            for (int i = 0; i < 2; i++)
             {
-                for (int i = 0; i < 2; i++)
-                    Assert.AreEqual(real_answer[i], expected_answer[i]);
-            }
+                try
+                {
+                    Assert.AreEqual(expected_result[i], real_result[i]);
+                }
 
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                Console.WriteLine("Dataset 8 is failed. Real meaning: [" + real_answer[0] + ", " + real_answer[1] + "]; and expected: [" + expected_answer[0] + ", " + expected_answer[1] + "]");
-            }
-        }
-
-        /// <summary>
-        /// Данный метод класса проверяет, корректно ли находится первый элемент массива
-        /// Проверка идёт по датасету #9
-        /// </summary>
-        [TestMethod]
-        public void TestSearchFirstItem_DS9()
-        {
-            int[] real_answer = new int[2];
-            int[] expected_answer = new int[2] { 0, 0 };
-
-            real_answer = InterpolSearch.execute(NinethDataset, NinethDataset[0]);
-
-            try
-            {
-                for (int i = 0; i < 2; i++)
-                    Assert.AreEqual(real_answer[i], expected_answer[i]);
-            }
-
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                Console.WriteLine("Dataset 9 is failed. Real meaning: [" + real_answer[0] + ", " + real_answer[1] + "]; and expected: [" + expected_answer[0] + ", " + expected_answer[1] + "]");
+                catch (Exception)
+                {
+                    Console.WriteLine("Test 6 failed. Expected value: " + expected_result[i] + "; real value: " + real_result[i]);
+                }
             }
         }
 
-        #endregion
-
-        #region Проверка нахождения последнего элемента
-
         /// <summary>
-        /// Данный метод класса проверяет, корректно ли находится элемент массива, который находится в конце
+        /// Данный тестовый метод осуществляет проверку корректности поиска значения между 0-м и 1-м элементами
         /// </summary>
         [TestMethod]
-        public void TestSearchLastItem_DS1()
+        public void TestFirstBorderOfMixedThreeItemsArray()
         {
-            // TODO
+            int[] expected_result = new int[2] { 0, 1 };
+            int[] real_result = new int[2];
+
+            real_result = InterpolSearch.execute(MixThreeItemsArray, 31);
+
+            for (int i = 0; i < 2; i++)
+            {
+                try
+                {
+                    Assert.AreEqual(expected_result[i], real_result[i]);
+                }
+
+                catch (Exception)
+                {
+                    Console.WriteLine("Test 7 failed. Expected value: " + expected_result[i] + "; real value: " + real_result[i]);
+                }
+            }
         }
-
-        #endregion
-
-        #region Проверка нахождения второго элемента
 
         /// <summary>
-        /// Данный метод класса проверяет, корректно ли находится второй элемент массива
+        /// Данный тестовый метод осуществляет проверку корректности поиска значения между 1-м и 2-м элементами
         /// </summary>
         [TestMethod]
-        public void TestSearchSecondItem()
+        public void TestSecondBorderOfMixedThreeItemsArray()
         {
-            // TODO
+            int[] expected_result = new int[2] { 1, 2 };
+            int[] real_result = new int[2];
+
+            real_result = InterpolSearch.execute(MixThreeItemsArray, 34);
+
+            for (int i = 0; i < 2; i++)
+            {
+                try
+                {
+                    Assert.AreEqual(expected_result[i], real_result[i]);
+                }
+
+                catch (Exception)
+                {
+                    Console.WriteLine("Test 8 failed. Expected value: " + expected_result[i] + "; real value: " + real_result[i]);
+                }
+            }
         }
-
-        #endregion
-
-        #region Проверка нахождения предпоследнего элемента
 
         /// <summary>
-        /// Данный метод класса проверяет, корректно ли находится предпоследний элемент массива
+        /// Данный тестовый метод осуществляет проверку корректности поиска значения между 0-м и 1-м элементами
         /// </summary>
         [TestMethod]
-        public void TestSearchPenultItem()
+        public void TestFirstBorderOfFractThreeItemsArray()
         {
-            // TODO
+            int[] expected_result = new int[2] { 0, 1 };
+            int[] real_result = new int[2];
+
+            real_result = InterpolSearch.execute(FractThreeItemsArray, 5.85);
+
+            for (int i = 0; i < 2; i++)
+            {
+                try
+                {
+                    Assert.AreEqual(expected_result[i], real_result[i]);
+                }
+
+                catch (Exception)
+                {
+                    Console.WriteLine("Test 9 failed. Expected value: " + expected_result[i] + "; real value: " + real_result[i]);
+                }
+            }
         }
-
-        #endregion
-
-        #region Проверка нахождения любого существующего элемента
 
         /// <summary>
-        /// Данный метод класса проверяет, корректно ли находится существующий элемент массива
+        /// Данный тестовый метод осуществляет проверку корректности поиска значения между 1-м и 2-м элементами
         /// </summary>
         [TestMethod]
-        public void TestSearchSomeItem()
+        public void TestSecondBorderOfFractThreeItemsArray()
         {
-            // TODO
+            int[] expected_result = new int[2] { 1, 2 };
+            int[] real_result = new int[2];
+
+            real_result = InterpolSearch.execute(FractThreeItemsArray, 5.75);
+
+            for (int i = 0; i < 2; i++)
+            {
+                try
+                {
+                    Assert.AreEqual(expected_result[i], real_result[i]);
+                }
+
+                catch (Exception)
+                {
+                    Console.WriteLine("Test 10 failed. Expected value: " + expected_result[i] + "; real value: " + real_result[i]);
+                }
+            }
         }
-
-        #endregion
-
-        #region Проверка определения отсутствия элемента
-
-        /// <summary>
-        /// Данный метод класса проверяет, корректно ли определяется, что поданного на вход элемента не существует
-        /// </summary>
-        [TestMethod]
-        public void TestSearchNonExistentItem()
-        {
-            // TODO
-        }
-
-        #endregion
-
-        #region Проверка поиска значения, находящегося между соседними элементами
-
-        /// <summary>
-        /// Данный метод класса проверяет, корректно ли находится элемент между элементами массива
-        /// </summary>
-        [TestMethod]
-        public void TestSearchBetweenItem()
-        {
-            // TODO
-        }
-
-        #endregion
 
         #endregion
 
         #region Тестовые наборы данных
 
         /// <summary>
-        /// И целые, и дробные числа
+        /// Тестовый набор данных, содержащий все значения заголовков столбцов таблицы
         /// </summary>
-        private double[] FirstDataset = new double[15] { 1, 2.7, 3.14, 8, 9, 10, 11, 12, 13, 14, 15.2, 16.8, 17.2, 18, 19 };
+        private double[] AllColumnsOfTable = new double[27] { 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72 };
 
         /// <summary>
-        /// Только дробные
+        /// Тестовый набор данных, содержащий все значения заголовков строк таблицы
         /// </summary>
-        private double[] SecondDataset = new double[15] { 2.2, 3.14, 4.6, 4.8, 5.8, 6.6, 7.1, 8.1, 9.1, 10.2, 11.9, 12.3, 13.9, 14.8, 15.4 };
+        private double[] AllRowsOfTable = new double[25] { 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150 };
 
         /// <summary>
-        /// Только целые
+        /// Тестовый набор данных, содержащий три целых элемента
         /// </summary>
-        private double[] ThirdDataset = new double[16] { 1, 4, 8, 12, 13, 14, 15, 17, 18, 22, 29, 31, 32, 34, 38, 39 };
+        private double[] IntThreeItemsArray = new double[3] { 70, 71, 72 };
 
         /// <summary>
-        /// Массив из одного элемента, целое число
+        /// Тестовый набор данных, содержащий три элемента, в состав входят целые и дробные числа
         /// </summary>
-        private double[] FourthDataset = new double[1] { 12 };
+        private double[] MixThreeItemsArray = new double[3] { 30, 32.5, 35 };
 
         /// <summary>
-        /// Массив из одного элемента, дробное число
+        /// Тестовый набор данных, содержащий три дробных элемента
         /// </summary>
-        private double[] FifthDataset = new double[1] { 22.5 };
-
-        /// <summary>
-        /// Массив из двух элементов, целые числа
-        /// </summary>
-        private double[] SixthDataset = new double[2] { 2, 5 };
-
-        /// <summary>
-        /// Массив из двух элементов, дробные числа
-        /// </summary>
-        private double[] SeventhDataset = new double[2] { 6.4, 8.3 };
-
-        /// <summary>
-        /// Массив из трёх чисел, целые
-        /// </summary>
-        private double[] EighthDataset = new double[3] { 4, 6, 8 };
-
-        /// <summary>
-        /// Массив из трёх чисел, дробные
-        /// </summary>
-        private double[] NinethDataset = new double[3] { 13.2, 18.6, 24.8 };
+        private double[] FractThreeItemsArray = new double[3] { 5.9, 5.8, 5.7 };
 
         #endregion
     }

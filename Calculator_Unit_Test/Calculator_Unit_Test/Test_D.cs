@@ -11,7 +11,7 @@ namespace Calculator_Unit_Test
     public class Test_D
     {
         /// <summary>
-        /// Данный метод класса непосредственно реализует эту проверку
+        /// Данный метод класса реализует эту проверку
         /// </summary>
         [TestMethod]
         public void TestFullIteration()
