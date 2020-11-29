@@ -30,9 +30,10 @@ namespace Calculator_Unit_Test
                     Assert.AreEqual(expected_result[i], real_result[i]);
                 }
 
-                catch (Exception)
+                catch (Exception e)
                 {
                     Console.WriteLine("Test 1 failed. Expected value: " + expected_result[i] + "; real value: " + real_result[i]);
+                    throw e;
                 }
             }
         }
@@ -55,9 +56,10 @@ namespace Calculator_Unit_Test
                     Assert.AreEqual(expected_result[i], real_result[i]);
                 }
 
-                catch (Exception)
+                catch (Exception e)
                 {
                     Console.WriteLine("Test 2 failed. Expected value: " + expected_result[i] + "; real value: " + real_result[i]);
+                    throw e;
                 }
             }
         }
@@ -80,9 +82,10 @@ namespace Calculator_Unit_Test
                     Assert.AreEqual(expected_result[i], real_result[i]);
                 }
 
-                catch (Exception)
+                catch (Exception e)
                 {
                     Console.WriteLine("Test 3 failed. Expected value: " + expected_result[i] + "; real value: " + real_result[i]);
+                    throw e;
                 }
             }
         }
@@ -105,9 +108,10 @@ namespace Calculator_Unit_Test
                     Assert.AreEqual(expected_result[i], real_result[i]);
                 }
 
-                catch (Exception)
+                catch (Exception e)
                 {
                     Console.WriteLine("Test 4 failed. Expected value: " + expected_result[i] + "; real value: " + real_result[i]);
+                    throw e;
                 }
             }
         }
@@ -130,9 +134,10 @@ namespace Calculator_Unit_Test
                     Assert.AreEqual(expected_result[i], real_result[i]);
                 }
 
-                catch (Exception)
+                catch (Exception e)
                 {
                     Console.WriteLine("Test 5 failed. Expected value: " + expected_result[i] + "; real value: " + real_result[i]);
+                    throw e;
                 }
             }
         }
@@ -155,9 +160,10 @@ namespace Calculator_Unit_Test
                     Assert.AreEqual(expected_result[i], real_result[i]);
                 }
 
-                catch (Exception)
+                catch (Exception e)
                 {
                     Console.WriteLine("Test 6 failed. Expected value: " + expected_result[i] + "; real value: " + real_result[i]);
+                    throw e;
                 }
             }
         }
@@ -180,9 +186,10 @@ namespace Calculator_Unit_Test
                     Assert.AreEqual(expected_result[i], real_result[i]);
                 }
 
-                catch (Exception)
+                catch (Exception e)
                 {
                     Console.WriteLine("Test 7 failed. Expected value: " + expected_result[i] + "; real value: " + real_result[i]);
+                    throw e;
                 }
             }
         }
@@ -205,9 +212,10 @@ namespace Calculator_Unit_Test
                     Assert.AreEqual(expected_result[i], real_result[i]);
                 }
 
-                catch (Exception)
+                catch (Exception e)
                 {
                     Console.WriteLine("Test 8 failed. Expected value: " + expected_result[i] + "; real value: " + real_result[i]);
+                    throw e;
                 }
             }
         }
@@ -230,9 +238,10 @@ namespace Calculator_Unit_Test
                     Assert.AreEqual(expected_result[i], real_result[i]);
                 }
 
-                catch (Exception)
+                catch (Exception e)
                 {
                     Console.WriteLine("Test 9 failed. Expected value: " + expected_result[i] + "; real value: " + real_result[i]);
+                    throw e;
                 }
             }
         }
@@ -255,9 +264,10 @@ namespace Calculator_Unit_Test
                     Assert.AreEqual(expected_result[i], real_result[i]);
                 }
 
-                catch (Exception)
+                catch (Exception e)
                 {
                     Console.WriteLine("Test 10 failed. Expected value: " + expected_result[i] + "; real value: " + real_result[i]);
+                    throw e;
                 }
             }
         }

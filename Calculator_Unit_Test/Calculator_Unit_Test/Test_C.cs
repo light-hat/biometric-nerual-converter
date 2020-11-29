@@ -51,9 +51,10 @@ namespace Calculator_Unit_Test
                     Assert.AreEqual(real_result.column_headers[i], expect_table.column_headers[i]);
                 }
 
-                catch (Exception)
+                catch (Exception e)
                 {
                     Console.WriteLine("Column headers test id failed. This is real meaning: " + real_result.column_headers[i] + "; and expected: " + expect_table.column_headers[i]);
+                    throw e;
                 }
 
                 try
@@ -61,9 +62,10 @@ namespace Calculator_Unit_Test
                     Assert.AreEqual(real_result.row_headers[i], expect_table.row_headers[i]);
                 }
 
-                catch (Exception)
+                catch (Exception e)
                 {
                     Console.WriteLine("Row headers test id failed. This is real meaning: " + real_result.row_headers[i] + "; and expected: " + expect_table.row_headers[i]);
+                    throw e;
                 }
             }
         }
