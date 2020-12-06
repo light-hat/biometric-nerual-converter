@@ -38,9 +38,10 @@ namespace Calculator_Unit_Test
                         Assert.AreEqual(real_result.matrix[i, j], expect_table.matrix[i, j]);
                     }
 
-                    catch (Exception)
+                    catch (Exception e)
                     {
                         Console.WriteLine("Matrix test id failed. This is real meaning: " + real_result.matrix[i, j] + "; and expected: " + expect_table.matrix[i, j]);
+                        throw e;
                     }
                 }
 

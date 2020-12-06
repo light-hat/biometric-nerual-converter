@@ -64,8 +64,8 @@
         public IterTableStruct getNewMatrix(double real_math_exp, double real_stand_deviation)
         {
             // Получение индексов искомых элементов
-            int[] indexes_rows = InterpolSearch.execute(_table_rows, real_math_exp);
-            int[] indexes_cols = InterpolSearch.execute(_table_cols, real_stand_deviation);
+            int[] indexes_rows = InterpolSearch.SeacrhInTheThreeItemsArray(_table_rows, real_math_exp);
+            int[] indexes_cols = InterpolSearch.SeacrhInTheThreeItemsArray(_table_cols, real_stand_deviation);
 
             // Формируем таблицу
 

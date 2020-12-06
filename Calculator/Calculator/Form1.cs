@@ -72,8 +72,8 @@ namespace Calculator
                         double[] full_table_head_cols = getDoubleValuesFromHeadersOfColumns(); // Заголовки для столбцов из области данных во всей таблице
                         double[,] full_table_data = getDoubleValuesFromData(); // Непосредственно табличные значения из области данных, тоже вся таблица
 
-                        int[] iter_matrix_rows_indexes = InterpolSearch.execute(full_table_head_rows, calcDlg.hammingDist); // Индексы заголовков строк искомых элементов в массиве, созданном выше. Важный момент, этот индекс не соответствует индексу из таблицы, что у пользователя на экране.
-                        int[] iter_matrix_cols_indexes = InterpolSearch.execute(full_table_head_cols, calcDlg.standDeviation); // Индексы заголовков столбцов для искомых в таблице данных
+                        int[] iter_matrix_rows_indexes = InterpolSearch.Execute(full_table_head_rows, calcDlg.hammingDist); // Индексы заголовков строк искомых элементов в массиве, созданном выше. Важный момент, этот индекс не соответствует индексу из таблицы, что у пользователя на экране.
+                        int[] iter_matrix_cols_indexes = InterpolSearch.Execute(full_table_head_cols, calcDlg.standDeviation); // Индексы заголовков столбцов для искомых в таблице данных
 
                         double[] iter_matrix_row_heads = new double[2]; // Непосредственно заголовки строк искомых элементов
                         double[] iter_matrix_col_heads = new double[2]; // Заголовки столбцов искомых элементов
@@ -240,6 +240,8 @@ namespace Calculator
                     dataGridView1[j, i].Value = ret_table.table[i, j];
                 }
             }
+
+            dataGridView1.Rows.Add(); // Дополнительная строка в таблице
         }
 
         #endregion

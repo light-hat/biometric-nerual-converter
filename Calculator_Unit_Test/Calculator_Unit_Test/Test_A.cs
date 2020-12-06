@@ -21,7 +21,7 @@ namespace Calculator_Unit_Test
             int[] expected_result = new int[2] { 0, 1 };
             int[] real_result = new int[2];
 
-            real_result = InterpolSearch.execute(AllColumnsOfTable, 21);
+            real_result = InterpolSearch.Execute(AllColumnsOfTable, 21);
 
             for (int i = 0; i < 2; i++)
             {
@@ -33,6 +33,8 @@ namespace Calculator_Unit_Test
                 catch (Exception e)
                 {
                     Console.WriteLine("Test 1 failed. Expected value: " + expected_result[i] + "; real value: " + real_result[i]);
+                    Console.WriteLine("What's happened: " + e.Message);
+
                     throw e;
                 }
             }
@@ -47,7 +49,7 @@ namespace Calculator_Unit_Test
             int[] expected_result = new int[2] { AllColumnsOfTable.Length - 2, AllColumnsOfTable.Length - 1 };
             int[] real_result = new int[2];
 
-            real_result = InterpolSearch.execute(AllColumnsOfTable, 71);
+            real_result = InterpolSearch.Execute(AllColumnsOfTable, 71);
 
             for (int i = 0; i < 2; i++)
             {
@@ -59,6 +61,8 @@ namespace Calculator_Unit_Test
                 catch (Exception e)
                 {
                     Console.WriteLine("Test 2 failed. Expected value: " + expected_result[i] + "; real value: " + real_result[i]);
+                    Console.WriteLine("What's happened: " + e.Message);
+
                     throw e;
                 }
             }
@@ -73,7 +77,7 @@ namespace Calculator_Unit_Test
             int[] expected_result = new int[2] { 0, 1 };
             int[] real_result = new int[2];
 
-            real_result = InterpolSearch.execute(AllRowsOfTable, 32);
+            real_result = InterpolSearch.Execute(AllRowsOfTable, 32);
 
             for (int i = 0; i < 2; i++)
             {
@@ -85,6 +89,8 @@ namespace Calculator_Unit_Test
                 catch (Exception e)
                 {
                     Console.WriteLine("Test 3 failed. Expected value: " + expected_result[i] + "; real value: " + real_result[i]);
+                    Console.WriteLine("What's happened: " + e.Message);
+
                     throw e;
                 }
             }
@@ -99,7 +105,7 @@ namespace Calculator_Unit_Test
             int[] expected_result = new int[2] { AllRowsOfTable.Length - 2, AllRowsOfTable.Length - 1 };
             int[] real_result = new int[2];
 
-            real_result = InterpolSearch.execute(AllRowsOfTable, 147);
+            real_result = InterpolSearch.Execute(AllRowsOfTable, 147);
 
             for (int i = 0; i < 2; i++)
             {
@@ -111,6 +117,8 @@ namespace Calculator_Unit_Test
                 catch (Exception e)
                 {
                     Console.WriteLine("Test 4 failed. Expected value: " + expected_result[i] + "; real value: " + real_result[i]);
+                    Console.WriteLine("What's happened: " + e.Message);
+
                     throw e;
                 }
             }
@@ -125,7 +133,7 @@ namespace Calculator_Unit_Test
             int[] expected_result = new int[2] { 0, 1 };
             int[] real_result = new int[2];
 
-            real_result = InterpolSearch.execute(IntThreeItemsArray, 70.5);
+            real_result = InterpolSearch.SeacrhInTheThreeItemsArray(IntThreeItemsArray, 70.5);
 
             for (int i = 0; i < 2; i++)
             {
@@ -137,6 +145,8 @@ namespace Calculator_Unit_Test
                 catch (Exception e)
                 {
                     Console.WriteLine("Test 5 failed. Expected value: " + expected_result[i] + "; real value: " + real_result[i]);
+                    Console.WriteLine("What's happened: " + e.Message);
+
                     throw e;
                 }
             }
@@ -151,7 +161,7 @@ namespace Calculator_Unit_Test
             int[] expected_result = new int[2] { 1, 2 };
             int[] real_result = new int[2];
 
-            real_result = InterpolSearch.execute(IntThreeItemsArray, 71.8);
+            real_result = InterpolSearch.SeacrhInTheThreeItemsArray(IntThreeItemsArray, 71.8);
 
             for (int i = 0; i < 2; i++)
             {
@@ -163,6 +173,8 @@ namespace Calculator_Unit_Test
                 catch (Exception e)
                 {
                     Console.WriteLine("Test 6 failed. Expected value: " + expected_result[i] + "; real value: " + real_result[i]);
+                    Console.WriteLine("What's happened: " + e.Message);
+
                     throw e;
                 }
             }
@@ -177,7 +189,7 @@ namespace Calculator_Unit_Test
             int[] expected_result = new int[2] { 0, 1 };
             int[] real_result = new int[2];
 
-            real_result = InterpolSearch.execute(MixThreeItemsArray, 31);
+            real_result = InterpolSearch.SeacrhInTheThreeItemsArray(MixThreeItemsArray, 31);
 
             for (int i = 0; i < 2; i++)
             {
@@ -189,6 +201,8 @@ namespace Calculator_Unit_Test
                 catch (Exception e)
                 {
                     Console.WriteLine("Test 7 failed. Expected value: " + expected_result[i] + "; real value: " + real_result[i]);
+                    Console.WriteLine("What's happened: " + e.Message);
+
                     throw e;
                 }
             }
@@ -203,7 +217,7 @@ namespace Calculator_Unit_Test
             int[] expected_result = new int[2] { 1, 2 };
             int[] real_result = new int[2];
 
-            real_result = InterpolSearch.execute(MixThreeItemsArray, 34);
+            real_result = InterpolSearch.SeacrhInTheThreeItemsArray(MixThreeItemsArray, 34);
 
             for (int i = 0; i < 2; i++)
             {
@@ -215,6 +229,8 @@ namespace Calculator_Unit_Test
                 catch (Exception e)
                 {
                     Console.WriteLine("Test 8 failed. Expected value: " + expected_result[i] + "; real value: " + real_result[i]);
+                    Console.WriteLine("What's happened: " + e.Message);
+
                     throw e;
                 }
             }
@@ -229,7 +245,7 @@ namespace Calculator_Unit_Test
             int[] expected_result = new int[2] { 0, 1 };
             int[] real_result = new int[2];
 
-            real_result = InterpolSearch.execute(FractThreeItemsArray, 5.85);
+            real_result = InterpolSearch.SeacrhInTheThreeItemsArray(FractThreeItemsArray, 5.85);
 
             for (int i = 0; i < 2; i++)
             {
@@ -241,6 +257,10 @@ namespace Calculator_Unit_Test
                 catch (Exception e)
                 {
                     Console.WriteLine("Test 9 failed. Expected value: " + expected_result[i] + "; real value: " + real_result[i]);
+                    Console.WriteLine("What's happened: " + e.Message);
+
+                    Console.WriteLine("Real array: {" + real_result[0] + ", " + real_result[1] + "}");
+
                     throw e;
                 }
             }
@@ -255,7 +275,7 @@ namespace Calculator_Unit_Test
             int[] expected_result = new int[2] { 1, 2 };
             int[] real_result = new int[2];
 
-            real_result = InterpolSearch.execute(FractThreeItemsArray, 5.75);
+            real_result = InterpolSearch.SeacrhInTheThreeItemsArray(FractThreeItemsArray, 5.75);
 
             for (int i = 0; i < 2; i++)
             {
@@ -267,6 +287,10 @@ namespace Calculator_Unit_Test
                 catch (Exception e)
                 {
                     Console.WriteLine("Test 10 failed. Expected value: " + expected_result[i] + "; real value: " + real_result[i]);
+                    Console.WriteLine("What's happened: " + e.Message);
+
+                    Console.WriteLine("Real array: {" + real_result[0] + ", " + real_result[1] + "}");
+
                     throw e;
                 }
             }
