@@ -58,7 +58,7 @@
         /// <summary>
         /// Поиск элемента в расширенной таблице. Так же, как и в InterpolSearch - поиск и самих элементов,
         /// и 2-х соседних, между которыми находится искомое значение.
-        /// Входной массив содержит три элемента, причём они не всегда упорядочены по возрастанию.
+        /// Входной массив содержит 3 элемента, причём они не всегда упорядочены по возрастанию.
         /// Так что здесь проще обработать условной конструкцией.
         /// </summary>
         /// <param name="a">Входной массив на 3 элемента</param>
@@ -68,28 +68,43 @@
         {
             int[] ans = new int[2];
 
-            if (a[0] == key)
+            if (IsAllArrayEntriesEqual(a)) // Все элементы равны между собой
+            {
+                if (a[0] == key)
+                {
+                    ans[0] = 0;
+
+                    return ans;
+                }
+
+                else throw new System.Exception("Индекс элемента не найден. Проверьте входные значения.");
+            }
+
+            else if (a[0] == key) // Первый полностью совпал
             {
                 ans[0] = 0;
+                ans[1] = 0;
 
                 return ans;
             }
 
-            else if (a[1] == key)
+            else if (a[1] == key) // Второй полностью совпал
             {
                 ans[0] = 1;
+                ans[1] = 1;
 
                 return ans;
             }
 
-            else if (a[2] == key)
+            else if (a[2] == key) // Третий полностью совпал
             {
                 ans[0] = 2;
+                ans[1] = 2;
 
                 return ans;
             }
 
-            else if (IsArrayNormalSorted(a))
+            else if (IsArrayNormalSorted(a)) // Между элементами, при этом у массива прямой порядок сортировки
             {
                 if (a[0] < key && key < a[1])
                 {
@@ -110,7 +125,7 @@
                 else throw new System.Exception("Индекс элемента не найден. Проверьте входные значения.");
             }
 
-            else if (IsArrayReverseSorted(a))
+            else if (IsArrayReverseSorted(a)) // Между элементами, но при обратном порядке сортировки массива
             {
                 if (a[0] > key && key > a[1])
                 {
@@ -124,19 +139,6 @@
                 {
                     ans[0] = 1;
                     ans[1] = 2;
-
-                    return ans;
-                }
-
-                else throw new System.Exception("Индекс элемента не найден. Проверьте входные значения.");
-            }
-
-            else if (IsAllArrayEntriesEqual(a))
-            {
-                if (a[0] == key)
-                {
-                    ans[0] = 0;
-                    ans[1] = 0;
 
                     return ans;
                 }

@@ -31,6 +31,9 @@ namespace Calculator
         /// <param name="e"></param>
         private void базаДанныхToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            dataGridView1.Rows.Clear();
+            dataGridView1.Columns.Clear();
+
             using (chooseTableDlg ch_dlg = new chooseTableDlg())
             {
                 var result = ch_dlg.ShowDialog(this);
@@ -45,7 +48,7 @@ namespace Calculator
                             break;
 
                         case 1:
-                            // Выбор другой таблицы. Пока у меня её нет, так что этот выбор просто игнорим
+                            // Выбор другой таблицы. Пока у меня её нет, так что этот выбор просто игнорируем
 
                             break;
                     }
