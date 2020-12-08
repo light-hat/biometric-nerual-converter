@@ -88,8 +88,11 @@
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(463, 186);
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(463, 186);
             this.Name = "calculateDlg";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Вычисление значения";
             this.ResumeLayout(false);
             this.PerformLayout();

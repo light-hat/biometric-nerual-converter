@@ -75,8 +75,11 @@
             this.Controls.Add(this.radioButton2);
             this.Controls.Add(this.radioButton1);
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(503, 185);
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(503, 185);
             this.Name = "chooseTableDlg";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Выбрать таблицу";
             this.ResumeLayout(false);
             this.PerformLayout();
