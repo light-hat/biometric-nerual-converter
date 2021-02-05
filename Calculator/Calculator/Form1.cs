@@ -48,7 +48,7 @@ namespace Calculator
                             break;
 
                         case 1:
-                            // Выбор другой таблицы. Пока у меня её нет, так что этот выбор просто игнорируем
+                            callTableReader("ownalien");
 
                             break;
                     }
@@ -226,25 +226,61 @@ namespace Calculator
             OpenedTableStruct ret_table = new OpenedTableStruct();
             ret_table = sqHelper.readDB(table_name);
 
-            dataGridView1.Columns.Add("number", "#");
-            dataGridView1.Columns.Add("hammdists", "E(h)");
-
-            for (int i = 2; i < ret_table.columns_headers.Length; i++)
+            switch (table_name)
             {
-                dataGridView1.Columns.Add(string.Format("stdev{0}", i - 2), ret_table.columns_headers[i]);
+                case "entropy_hamming_deviation":
+                    {
+                        dataGridView1.Columns.Add("number", "#");
+                        dataGridView1.Columns.Add("hammdists", "E(h)");
+
+                        for (int i = 2; i < ret_table.columns_headers.Length; i++)
+                        {
+                            dataGridView1.Columns.Add(string.Format("stdev{0}", i - 2), ret_table.columns_headers[i]);
+                        }
+
+                        for (int i = 0; i < ret_table.table.GetLength(0); i++)
+                        {
+                            dataGridView1.Rows.Add();
+
+                            for (int j = 0; j < ret_table.table.GetLength(1); j++)
+                            {
+                                dataGridView1[j, i].Value = ret_table.table[i, j];
+                            }
+                        }
+
+                        dataGridView1.Rows.Add();
+                    }
+
+                    break;
+
+                case "ownalien":
+                    {
+                        dataGridView1.Columns.Add("number", "#");
+                        dataGridView1.Columns.Add("deviation", "σ(h)");
+                        
+                        for (int i = 2; i < ret_table.columns_headers.Length; i++)
+                        {
+                            dataGridView1.Columns.Add(string.Format("hammdist{0}", i - 2), ret_table.columns_headers[i]);
+                        }
+
+                        for (int i = 0; i < ret_table.table.GetLength(0); i++)
+                        {
+                            dataGridView1.Rows.Add();
+                            
+                            for (int j = 0; j < ret_table.table.GetLength(1); j++)
+                            {
+                                dataGridView1[j, i].Value = ret_table.table[i, j];
+                            }
+                        }
+
+                        dataGridView1.Rows.Add();
+                    }
+
+                    break;
+
+                default:
+                    throw new Exception("Ошибка! Указана несуществующая таблица!");
             }
-
-            for (int i = 0; i < ret_table.table.GetLength(0); i++)
-            {
-                dataGridView1.Rows.Add();
-
-                for (int j = 0; j < ret_table.table.GetLength(1); j++)
-                {
-                    dataGridView1[j, i].Value = ret_table.table[i, j];
-                }
-            }
-
-            dataGridView1.Rows.Add(); // Дополнительная строка в таблице
         }
 
         #endregion
