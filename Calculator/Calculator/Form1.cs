@@ -148,6 +148,27 @@ namespace Calculator
             }
         }
 
+        /// <summary>
+        /// Обработчик для пункта "О программе"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void оПрограммеToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (var about = new AboutProgram())
+                {
+                    about.ShowDialog(this);
+                }
+            }
+
+            catch (Exception ex)
+            {
+                ErrorHandler.showErrorMessage(ex.Message + '\n' + ex.StackTrace);
+            }
+        }
+
         #endregion
 
         #region Вспомогательные методы
